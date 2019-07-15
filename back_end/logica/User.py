@@ -1,28 +1,31 @@
-class IdNoValidException(Exception):
+class UserException(Exception):
+	pass
+
+class IdNoValidException(UserException):
 	def __init__(this):
 		super ("id debe ser un entero.")
 
-class NameNoValidException(Exception):
+class NameNoValidException(UserException):
 	def __init__(this):
 		super ("name debe ser una cadena.")
 
-class PasswordNoValidException(Exception):
+class PasswordNoValidException(UserException):
 	def __init__(this):
 		super ("password debe ser una cadena.")
 
-class ReviewsNoValidException(Exception):
+class ReviewsNoValidException(UserException):
 	def __init__(this):
 		super ("reviews debe ser una lista de objetos Review.")
 
-class ReviewNoValidException(Exception):
+class ReviewNoValidException(UserException):
 	def __init__(this):
 		super ("review debe ser una instancia de Review.")
 
-class RecomendationsNoValidException(Exception):
+class RecomendationsNoValidException(UserException):
 	def __init__(this):
 		super ("recomendations debe ser una lista de objetos Recomendation.")
 
-class RecomendationNoValidException(Exception):
+class RecomendationNoValidException(UserException):
 	def __init__(this):
 		super ("recomendation debe ser una instancia de Recomendation.")
 
