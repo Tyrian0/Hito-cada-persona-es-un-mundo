@@ -107,5 +107,3 @@ class User:
 		if recomendation == None or type (recomendation) != Recomendation:
 			raise RecomendationNoValidException()
 		this.__recomendations.append(recomendation)
-
-
