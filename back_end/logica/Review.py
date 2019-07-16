@@ -3,15 +3,15 @@ class ReviewException(Exception):
 
 class IdNoValidException(ReviewException):
 	def __init__(this):
-		super ("id debe ser una tupla de enteros.")
+		ReviewException ("id debe ser una tupla de enteros.")
 
 class ExprienceNoValidException(ReviewException):
 	def __init__(this):
-		super ("experience debe ser un objeto de la clase Experience.")
+		ReviewException ("experience debe ser un objeto de la clase Experience.")
 
 class RatingNoValidException(ReviewException):
 	def __init__(this):
-		super ("rating debe ser un objeto de la clase Rating")
+		ReviewException ("rating debe ser un objeto de la clase Rating")
 
 class Review:
 	#Constructor

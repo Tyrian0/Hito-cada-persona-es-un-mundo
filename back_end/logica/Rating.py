@@ -3,53 +3,65 @@ class RatingException(Exception):
 
 class ValueNoValidException(RatingException):
 	def __init__(this):
-		super ("value debe ser un numero.")
+		RatingException.__init__(this, "value debe ser un numero.")
 
 class MinNoValidException(RatingException):
 	def __init__(this):
-		super ("min debe ser un numero.")
+		RatingException.__init__(this, "min debe ser un numero.")
 
 class MaxNoValidException(RatingException):
 	def __init__(this):
-		super ("max debe ser un numero.")
+		RatingException.__init__(this, "max debe ser un numero.")
 
 class OutOfRangeException(RatingException):
 	def __init__(this, min, max):
-		super ("value not in range [%g,%g)" %(min, max))
+		RatingException.__init__(this, "value not in range [%g,%g]" %(min, max))
 
 class Rating:
 	#Definimos el rango de los ratings como "constantes"
-	@staticMethod
-	def getMinRating:
+	@staticmethod
+	def getMin():
 		return 1.0
-	@staticMethod
-	def getMinRating:
+	@staticmethod
+	def getMax():
 		return 5.0
 
 	#Constructor
-		#min: valor minimo de value, por defecto 1
-		#max: valor maximo de value, por defecto 5
-			#Si se especifica alguno de los dos se adaptará el numero al rango [1,5)
-	def __init__ (this, value, min = Rating.getMinRating(), max = Rating.getMaxRating()):
-		this.setValue(value, min, max)
+	def __init__ (this, value, min = None, max = None):
+		this.__setValue(value, min, max)
 
-	#Seter de value
-		#Si value no es un numero se lanza una excepción
+	#Definimos los Rating como inmutables
+		#min: valor minimo de value, por defecto Rating.getMin()
+		#max: valor maximo de value, por defecto Rating.getMax()
+		#Se adapta el numero al rango [1,5]
+	def __setValue(this, value, min, max):
+		if (min == None):
+			min = Rating.getMin()
+		if (max == None):
+			max = Rating.getMax()
+		this.__value = Rating.resize(value, min, max)
+	def getValue(this):
+		return this.__value
+
+	@staticmethod
+	def __isNumber(number):
+		return number != None and (type (number) == float or type (number) == int)
+
+	#Si value no es un numero se lanza una excepción
 		#min <= value      . Si no es un numero o no se cumple se lanza una excepción
 		#       value < max. Si no es un numero o no se cumple se lanza una excepción
-	def setValue(value, min, max)
+		#Convierte numeros del rango [min,max] a [Rating.getMin,Rating.getMax]
+	@staticmethod
+	def resize(value, min, max):
 		if not Rating.__isNumber(value):
 			raise ValueNoValidException()
 		if not Rating.__isNumber(min):
 			raise MinNoValidException()
 		if not Rating.__isNumber(max):
 			raise MaxNoValidException()
-		if min > value or value >= max:
+		if min > value or value > max:
 			raise OutOfRangeException(min, max)
-		this.__id = id
-	def getValue(this):
-		return this.__value
+		return (value-min)/(max-min)*(Rating.getMax()-Rating.getMin()) + Rating.getMin()
 
-	@staticMethod
-	def __isNumber(number):
-		return number != None and (type (number) == float or type (number) == int)
+	def __str__ (this):
+		return str(this.getValue())
