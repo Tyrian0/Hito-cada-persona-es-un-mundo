@@ -1,22 +1,22 @@
 from Experience import Experience
 from Rating import Rating
 
-class ReviewException(Exception):
+class RecomendationException(Exception):
 	pass
 
-class IdNoValidException(ReviewException):
+class IdNoValidException(RecomendationException):
 	def __init__(this):
-		ReviewException.__init__(this, "id debe ser una tupla de enteros.")
+		RecomendationException.__init__(this, "id debe ser una tupla de enteros.")
 
-class ExprienceNoValidException(ReviewException):
+class ExprienceNoValidException(RecomendationException):
 	def __init__(this):
-		ReviewException.__init__(this, "experience debe ser un objeto de la clase Experience.")
+		RecomendationException.__init__(this, "experience debe ser un objeto de la clase Experience.")
 
-class RatingNoValidException(ReviewException):
+class RatingNoValidException(RecomendationException):
 	def __init__(this):
-		ReviewException.__init__(this, "rating debe ser un objeto de la clase Rating")
+		RecomendationException.__init__(this, "rating debe ser un objeto de la clase Rating")
 
-class Review:
+class Recomendation:
 	#Constructor
 		#id: opcional, si no se incluye no se crea atributo
 	def __init__ (this, experience, rating, id = None):

@@ -28,6 +28,10 @@ class Rating:
 
 	#Constructor
 	def __init__ (this, value, min = None, max = None):
+		if (min == None):
+			min = Rating.getMin()
+		if (max == None):
+			max = Rating.getMax()
 		this.__setValue(value, min, max)
 
 	#Definimos los Rating como inmutables
@@ -35,10 +39,6 @@ class Rating:
 		#max: valor maximo de value, por defecto Rating.getMax()
 		#Se adapta el numero al rango [1,5]
 	def __setValue(this, value, min, max):
-		if (min == None):
-			min = Rating.getMin()
-		if (max == None):
-			max = Rating.getMax()
 		this.__value = Rating.resize(value, min, max)
 	def getValue(this):
 		return this.__value

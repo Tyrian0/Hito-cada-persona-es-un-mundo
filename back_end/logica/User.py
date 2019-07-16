@@ -1,3 +1,7 @@
+from Experience import Experience
+from Recomendation import Recomendation
+from Review import Review
+
 class UserException(Exception):
 	pass
 
@@ -7,11 +11,11 @@ class IdNoValidException(UserException):
 
 class NameNoValidException(UserException):
 	def __init__(this):
-		UserException ("name debe ser una cadena.")
+		UserException ("name debe ser un str.")
 
 class PasswordNoValidException(UserException):
 	def __init__(this):
-		UserException ("password debe ser una cadena.")
+		UserException ("password debe ser un str.")
 
 class ReviewsNoValidException(UserException):
 	def __init__(this):
@@ -19,22 +23,22 @@ class ReviewsNoValidException(UserException):
 
 class ReviewNoValidException(UserException):
 	def __init__(this):
-		UserException ("review debe ser una instancia de Review.")
+		UserException.__init__(this, "review debe ser una instancia de Review.")
 
 class RecomendationsNoValidException(UserException):
 	def __init__(this):
-		UserException ("recomendations debe ser una lista de objetos Recomendation.")
+		UserException.__init__(this, "recomendations debe ser una lista de objetos Recomendation.")
 
 class RecomendationNoValidException(UserException):
 	def __init__(this):
-		UserException ("recomendation debe ser una instancia de Recomendation.")
+		UserException.__init__(this, "recomendation debe ser una instancia de Recomendation.")
 
 class User:
 	#Constructor
 		#id: opcional, si no se incluye no se crea atributo
 		#reviews: opcional, por defecto crea una lista vacía
 		#recomendations: opcional, por defecto crea una lista vacía
-	def __init__ (this, id = None, name, password, reviews = [], recomendations = []):
+	def __init__ (this, name, password, reviews = [], recomendations = [], id = None):
 		if id != None:
 			this.setId(id)
 		this.__setName(name)
@@ -54,7 +58,7 @@ class User:
 	#Seter de name
 		#Si name no es un string se lanza una excepción
 	def __setName(this, name):
-		if name == None or type (name) != string:
+		if name == None or type (name) != str:
 			raise NameNoValidException()
 		this.__name = name
 	def getName(this):
@@ -63,7 +67,7 @@ class User:
 	#Seter de password
 		#Si password no es un string se lanza una excepción
 	def __setPassword(this, password):
-		if name == None or type (name) != string:
+		if password == None or type (password) != str:
 			raise PasswordNoValidException()
 		this.__password = password
 	def getPassword(this):
@@ -73,26 +77,26 @@ class User:
 		#Si name no es una lista de Reviews se lanza una exepción
 	def __setReviews(this, reviews):
 		#Comprobamos que sea una lista
-		if reviews == None or type (reviews) != type[]:
+		if reviews == None or type (reviews) != type([]):
 			raise ReviewsNoValidException()
 		#Comprobamos que contenga Reviews
 		for review in reviews:
 			if type(review) != Review:
-			raise ReviewsNoValidException()
+				raise ReviewsNoValidException()
 		this.__reviews = reviews
 	def getReviews(this):
 		return this.__reviews
 
 	#Seter de recomendations
 		#Si name no es una lista de Recomendations se lanza una exepción
-	def __setRecomendations(this, recomendations):
+	def setRecomendations(this, recomendations):
 		#Comprobamos que sea una lista
-		if recomendations == None or type (recomendations) != type[]:
+		if recomendations == None or type (recomendations) != type([]):
 			raise RecomendationsNoValidException()
 		#Comprobamos que contenga Reviews
 		for recomendation in recomendations:
 			if type(recomendation) != Recomendation:
-			raise RecomendationsNoValidException()
+				raise RecomendationsNoValidException()
 		this.__recomendations = recomendations
 	def getRecomendations(this):
 		return this.__recomendations
@@ -106,7 +110,7 @@ class User:
 
 	#Método para añadir una review a la lista.
 		#Si review no es un objeto de la clase Review se lanza una excepción.
-	def addRecomendation(this, review):
+	def addRecomendation(this, recomendation):
 		if recomendation == None or type (recomendation) != Recomendation:
 			raise RecomendationNoValidException()
 		this.__recomendations.append(recomendation)
