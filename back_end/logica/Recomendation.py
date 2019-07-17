@@ -23,7 +23,7 @@ class Recomendation:
 		if id != None:
 			this.setId(id)
 		this.__setExperience(experience)
-		this.__setRating(rating)
+		this.setRating(rating)
 
 	#Seter de Id
 		#Si id no es una tupla de int se lanza una exacepción
@@ -50,7 +50,7 @@ class Recomendation:
 
 	#Seter de rating
 		#Si rating no es un objeto de la clase Rating se lanza una excepción
-	def __setRating(this, rating):
+	def setRating(this, rating):
 		if rating == None or type (rating) != Rating:
 			raise RatingNoValidException()
 		this.__rating = rating
