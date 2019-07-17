@@ -7,7 +7,7 @@ class AdminTypesExperiences:
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		self.__cursor = self.__cnx.cursor()
 
-	def createTypeExperience(self,name):
+	def addTypeExperience(self,name):
 		query = "INSERT INTO types_experiences(name) VALUES ('%s')" %(name)
 		self.__cursor.execute(query)
 		self.__cnx.commit()
