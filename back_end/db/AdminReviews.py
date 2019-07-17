@@ -7,45 +7,32 @@ class AdminReviews:
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		self.__cursor = self.__cnx.cursor()
 
-	def addReview(self, user):
-		query = "INSERT INTO user(name) VALUES ('%s')" %(user.getName())
+	def addReview(self, review, user):
+		query = "INSERT INTO review(id_exp,id_user,rating) VALUES (%i, %i, %f)" /n
+		(%review.getExperience().getId(), user.getId(), review.getRating())
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	def updateUserName(self, user):
-		query = "UPDATE users SET name ='%s'  where id_user = %i"(%user.getName(), user.getId())
-		self.__cursor.execute(query)
-		self.__cnx.commit()
-
-	def updatePassword(self, user):
-		query = "UPDATE users SET password ='%s'  where id_user = %i"(%user.getPassword(), user.getId())
-		self.__cursor.execute(query)
-		self.__cnx.commit()
-
-
-	def deleteUser(self, user):
-		query = "DELETE FROM users WHERE id_user=%i" %(user.getId())
-		self.__cursor.execute(query)
-		self.__cnx.commit()
 
 	def getAll(self):
-		query = "SELECT * from users"
+		query = "SELECT * from reviews"
 		self.__cursor.execute(query)
-		users_db = self.__cursor.fetchall()
-		users = []
-		for user in users_db:
-			users.append(User(user[1], user[2]))
-		return users
-
-	def getById(self, user):
-		query = "SELECT * from users WHERE id_user = %i" %(user.getId())
+		reviews_db = self.__cursor.fetchall()
+		reviews = []
+		for review in reviews_db:
+			experience = AdminExperiences.getById(review[0])
+			reviews.append(Review(experience, review[2]))
+		return reviews
+'''
+	def getById(self, id_review):
+		query = "SELECT * from reviews WHERE id_user =%i and id_exp = %i" %(id_review[0], id_review[1])
 		self.__cursor.execute(query)
-		user_db = self.__cursor.fetchone()
-		user = ''
-		if len(user_db) > 0:
-			user = User(user_db[1], user_db[2])
+		review_db = self.__cursor.fetchone()
+		review = ''
+		if len(review_db) > 0:
+			review = Review(review_db[1], review_db[2])
 		return user
-
+'''
 	def cerrarConexion(self):
 		self.__cursor.close()
 		self.__cnx.close()

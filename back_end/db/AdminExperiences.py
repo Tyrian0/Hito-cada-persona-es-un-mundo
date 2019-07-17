@@ -25,8 +25,8 @@ class AdminExperiences:
 			experiences.append(Experience(experience[1], experience[2], experience[0]))
 		return experiences
 
-	def getById(self, experience):
-		query = "SELECT * from experiences WHERE id_exp = %i" %(experience.getId())
+	def getById(self, id_exp):
+		query = "SELECT * from experiences WHERE id_exp = %i" %(id_exp)
 		self.__cursor.execute(query)
 		experience_db = self.__cursor.fetchone()
 		experience = ''
