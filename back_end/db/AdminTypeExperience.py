@@ -1,13 +1,19 @@
-import mysql.connector
-from clase.genero import *
+import sys
+sys.path.append('../')
 
-class AdminTypesExperiences:
+import mysql.connector
+from logica.User import *
+from logica.Experience import *
+from logica.Recomendation import *
+from logica.Review import *
+
+class AdminTypeExperience:
 
 	def __init__(self):
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		self.__cursor = self.__cnx.cursor()
 
-	def addTypeExperience(self,name):
+	def addTypeExperience(self, name):
 		query = "INSERT INTO types_experiences(name) VALUES ('%s')" %(name)
 		self.__cursor.execute(query)
 		self.__cnx.commit()
@@ -30,7 +36,6 @@ class AdminTypesExperiences:
 		type_experience = self.__cursor.fetchone()
 		return type_experience
 
-
-	def cerrarConexion(self):
+	def closeConnection(self):
 		self.__cursor.close()
 		self.__cnx.close()
