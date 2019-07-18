@@ -1,5 +1,7 @@
-from Experience import Experience
-from Rating import Rating
+#from Experience import Experience
+#from Rating import Rating
+from logica.Experience import *
+from logica.Rating import *
 
 class ReviewException(Exception):
 	pass

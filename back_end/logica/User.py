@@ -1,6 +1,9 @@
-from Experience import Experience
-from Recomendation import Recomendation
-from Review import Review
+#from Experience import Experience
+#from Recomendation import Recomendation
+#from Review import Review
+from logica.Experience import *
+from logica.Recomendation import *
+from logica.Review import *
 
 class UserException(Exception):
 	pass
