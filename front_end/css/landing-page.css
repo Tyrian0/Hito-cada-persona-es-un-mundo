@@ -19,6 +19,7 @@ header.masthead {
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
+  height: 95vh;
 }
 
 header p {
@@ -47,8 +48,8 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding-top: 20rem;
+    padding-bottom: 20rem;
   }
   header.masthead h1 {
     font-size: 3rem;
