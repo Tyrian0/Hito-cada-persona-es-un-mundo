@@ -12,6 +12,10 @@ h6 {
   font-weight: 700;
 }
 
+.navbar{
+  min-height: 8vh;
+}
+
 header.masthead {
   position: relative;
   background-color: #343a40;
