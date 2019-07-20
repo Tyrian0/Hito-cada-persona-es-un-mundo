@@ -14,24 +14,12 @@ class AdminTypeExperience:
 		self.__cursor = self.__cnx.cursor()
 
 	def addTypeExperience(self, name):
-		query = "INSERT INTO types_experiences(name) VALUES ('%s')" %(name)
+		query = "INSERT INTO types_experiences(name) VALUES ('%s')" %(str(name).replace("'", "''"))
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	def getAll(self):
-		query = "SELECT * from types_experiences"
-		self.__cursor.execute(query)
-		types_experiences = self.__cursor.fetchall()
-		return types_experiences
-
-	def getById(self, id_type):
-		query = "SELECT * from types_experiences WHERE id_type = %i" %(id_type)
-		self.__cursor.execute(query)
-		type_experience = self.__cursor.fetchone()
-		return type_experience
-
 	def getByName(self, name):
-		query = "SELECT * from types_experiences WHERE name = '%s'" %(name)
+		query = "SELECT * from types_experiences WHERE name = '%s'" %(str(name).replace("'", "''"))
 		self.__cursor.execute(query)
 		type_experience = self.__cursor.fetchone()
 		return type_experience
@@ -39,3 +27,20 @@ class AdminTypeExperience:
 	def closeConnection(self):
 		self.__cursor.close()
 		self.__cnx.close()
+
+	def deleteAll(self):
+		query = "DELETE FROM types_experiences"
+		self.__cursor.execute(query)
+		self.__cnx.commit()
+
+	# def getAll(self):
+	# 	query = "SELECT * from types_experiences"
+	# 	self.__cursor.execute(query)
+	# 	types_experiences = self.__cursor.fetchall()
+	# 	return types_experiences
+
+	# def getById(self, id_type):
+	# 	query = "SELECT * from types_experiences WHERE id_type = %i" %(id_type)
+	# 	self.__cursor.execute(query)
+	# 	type_experience = self.__cursor.fetchone()
+	# 	return type_experience

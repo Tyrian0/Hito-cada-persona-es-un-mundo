@@ -6,6 +6,8 @@ from logica.User import *
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
+from AdminReview import *
+from AdminRecomendation import *
 
 class AdminUser:
 
@@ -13,31 +15,70 @@ class AdminUser:
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		self.__cursor = self.__cnx.cursor()
 
+	# Used when trying to register: if username exists, it won't add the new one to the database
 	def addUser(self, user):
-		query = "INSERT INTO users(name, password) VALUES ('%s', '%s')" %(user.getName(), user.getPassword())
-		self.__cursor.execute(query)
-		self.__cnx.commit()
+		retrievedUser = self.getByUsername(user.getName())
+		if retrievedUser is None:
+			query = "INSERT INTO users(name, password) VALUES ('%s', '%s')" %(user.getName().replace("'", "''"), user.getPassword().replace("'", "''"))
+			self.__cursor.execute(query)
+			self.__cnx.commit()
+		else:
+			return 'This username already exists!'
 
-	def getAll(self):
-		query = "SELECT * from users"
-		self.__cursor.execute(query)
-		users_db = self.__cursor.fetchall()
-		users = []
-		for user in users_db:
-			users.append(User(user[1], str(user[2]), [], [], user[0]))
-		return users
+	# Checks whether this username exists in the database
+	def getByUsername(self, name):
+		query = "SELECT * from users WHERE name = '%s'" %(str(name).replace("'", "''"))
+		user = self.retrieveUser(query)
+		if user is not None and type (user) == User:
+			return user
+		else:
+			"This username doesn't exist!"		
 
-	def getById(self, user):
-		query = "SELECT * from users WHERE id_user = %i" %(user.getId())
+	# Checks whether a username with this password exists in the database 
+	def getByUsernameAndPassword(self, name, password):
+		query = "SELECT * from users WHERE name = '%s' AND password = '%s'" %(str(name).replace("'", "''"), password.replace("'", "''"))
+		user = self.retrieveUser(query)
+		if user is not None and type (user) == User:
+			return user
+		else:
+			"Ooops! Wrong password!"
+
+	def retrieveUser(self, query):
+		adminReview = AdminReview()
+		adminRecomendation = AdminRecomendation()
 		self.__cursor.execute(query)
 		user_db = self.__cursor.fetchone()
-		if len(user_db) > 0:
-			user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
-		return user
+		if user_db is None:
+			return
+		else:
+			user = User(user_db[1], user_db[2], [], [], user_db[0])
+			reviews = adminReview.getReviewsFromUser(user)
+			recomendations = adminRecomendation.getRecomendationsFromUser(user)
+			user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
+			return user
 
 	def closeConnection(self):
 		self.__cursor.close()
 		self.__cnx.close()
+
+	def deleteAll(self):
+		query = "DELETE FROM users"
+		self.__cursor.execute(query)
+		self.__cnx.commit()
+
+	# def getAll(self):
+	# 	adminReview = AdminReview()
+	# 	adminRecomendation = AdminRecomendation()
+	# 	query = "SELECT * from users"
+	# 	self.__cursor.execute(query)
+	# 	users_db = self.__cursor.fetchall()
+	# 	users = []
+	# 	for user_db in users_db:
+	# 		user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
+	# 		reviews = adminReview.getReviewsFromUser(user)
+	# 		recomendations = adminRecomendation.getRecomendationsFromUser(user)			
+	# 		users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
+	# 	return users
 
 	# def updateName(self, user):
 	# 	query = "UPDATE users SET name ='%s'  where id_user = %i" %(user.getName(), user.getId())

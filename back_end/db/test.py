@@ -35,13 +35,12 @@ from logica.Recomendation import *
 # adminReview.getReviewsFromUser(user)
 
 # Testing Admin User
-# adminUser = AdminUser()
-# user = User('James', 'dfjiog5075')
-# adminUser.addUser(user)
-# users = adminUser.getAll()
-# for user in users:
-# 	user_from_getById = adminUser.getById(user)
-# 	print(user_from_getById.getId())
+adminUser = AdminUser()
+user = User('Robb', 'dfjiog5075')
+adminUser.addUser(user)
+users = adminUser.getAll()
+for user in users:
+	print(user.getName())
 
 # Testing AdminTypeExperience
 # adminTypeExperience = AdminTypeExperience()

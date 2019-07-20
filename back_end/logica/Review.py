@@ -45,6 +45,8 @@ class Review:
 		#Si experience no es un objeto de la clase Experience se lanza una excepción
 	def __setExperience(this, experience):
 		if experience == None or type (experience) != Experience:
+			print(experience)
+			print(type(experience))
 			raise ExperienceNoValidException()
 		this.__experience = experience
 	def getExperience(this):

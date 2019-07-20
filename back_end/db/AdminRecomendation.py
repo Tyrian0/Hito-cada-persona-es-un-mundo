@@ -17,16 +17,6 @@ class AdminRecomendation:
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	def getAll(self):
-		query = "SELECT * from recommendations"
-		self.__cursor.execute(query)
-		recomendations_db = self.__cursor.fetchall()
-		recomendationss = []
-		for recomendation in recomendations_db:
-			experience = AdminExperience.getById(recomendation[0])
-			recomendations.append(recomendation(experience, recomendation[2]))
-		return recomendations
-
 	def getRecomendationsFromUser(self, user):
 		query = "SELECT r.rating, e.name, e.id_exp, t.name, t.id_type from recommendations r " \
 				"JOIN users u ON u.id_user = r.id_user " \
@@ -35,19 +25,29 @@ class AdminRecomendation:
 				"WHERE u.id_user = %i" %(user.getId())
 		self.__cursor.execute(query)
 		recomendations_db = self.__cursor.fetchall()
-		print(recomendations_db)
-		# for recomendation_db in recomendations_db:
-		# 	recomendation = recomendation()
-
-	# def getById(self, id_recomendation):
-	# 	query = "SELECT * from recomendations WHERE id_user =%i and id_exp = %i" %(id_recomendation[0], id_recomendation[1])
-	# 	self.__cursor.execute(query)
-	# 	recomendation_db = self.__cursor.fetchone()
-	# 	recomendation = ''
-	# 	if len(recomendation_db) > 0:
-	# 		recomendation = recomendation(recomendation_db[1], recomendation_db[2])
-	# 	return user
+		recomendations = []
+		for recomend_db in recomendations_db:
+			experience = Experience(recomend_db[1], recomend_db[3], recomend_db[2])
+			rating = Rating(recomend_db[0])
+			recomendation = Recomendation(experience, rating)
+			recomendations.append(recomendation)
+		return recomendations
 
 	def closeConnection(self):
 		self.__cursor.close()
 		self.__cnx.close()
+
+	def deleteAll(self):
+		query = "DELETE FROM recommendations"
+		self.__cursor.execute(query)
+		self.__cnx.commit()
+
+	# def getAll(self):
+	# 	query = "SELECT * from recommendations"
+	# 	self.__cursor.execute(query)
+	# 	recomendations_db = self.__cursor.fetchall()
+	# 	recomendationss = []
+	# 	for recomendation in recomendations_db:
+	# 		experience = AdminExperience.getById(recomendation[0])
+	# 		recomendations.append(recomendation(experience, recomendation[2]))
+	# 	return recomendations
