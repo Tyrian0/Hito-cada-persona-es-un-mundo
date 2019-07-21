@@ -6,8 +6,10 @@ from logica.User import *
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
+from logica.MachineLearning import *
 from AdminReview import *
 from AdminRecomendation import *
+#from AdminMachineLearning import *
 
 class AdminUser:
 
@@ -50,6 +52,7 @@ class AdminUser:
 	def retrieveUser(self, query):
 		adminReview = AdminReview()
 		adminRecomendation = AdminRecomendation()
+		#adminMachineLearning = AdminMachineLearning()		
 		self.__cursor.execute(query)
 		user_db = self.__cursor.fetchone()
 		if user_db is None:
@@ -57,8 +60,14 @@ class AdminUser:
 		else:
 			user = User(user_db[1], user_db[2], [], [], user_db[0])
 			reviews = adminReview.getReviewsFromUser(user)
+			# Código si guardásemos recomendaciones en base de datos:
 			recomendations = adminRecomendation.getRecomendationsFromUser(user)
 			user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
+			# Código si calculamos recomendaciones cada vez:
+			# user = User(user_db[1], user_db[2], reviews, [], user_db[0])
+			# correlations = adminMachineLearning.getCorrelations()
+			# machineLearning = MachineLearning(correlations)
+			# machineLearning.recomendate(user)
 			return user
 
 	def closeConnection(self):
