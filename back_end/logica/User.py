@@ -8,6 +8,10 @@ from logica.Review import *
 class UserException(Exception):
 	pass
 
+class UserNoValidException(UserException):
+	def __init__(this):
+		UserException.__init__(this, "user debe ser un objeto de la clase User.")
+
 class IdNoValidException(UserException):
 	def __init__(this):
 		UserException ("id debe ser un entero.")

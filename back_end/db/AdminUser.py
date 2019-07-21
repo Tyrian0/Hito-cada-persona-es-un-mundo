@@ -15,17 +15,20 @@ class AdminUser:
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		self.__cursor = self.__cnx.cursor()
 
-	# Used when trying to register: if username exists, it won't add the new one to the database
+	# Usado al tratar de registrarse: si el nombre de usuario ya existe, no lo añadirá a la BBDD
 	def addUser(self, user):
+		if user == None or type (user) != User:
+			raise UserNoValidException()
 		retrievedUser = self.getByUsername(user.getName())
 		if retrievedUser is None:
-			query = "INSERT INTO users(name, password) VALUES ('%s', '%s')" %(user.getName().replace("'", "''"), user.getPassword().replace("'", "''"))
+			query = "INSERT INTO users(name, password) VALUES ('%s', '%s')" \
+			%(user.getName().replace("'", "''"), user.getPassword().replace("'", "''"))
 			self.__cursor.execute(query)
 			self.__cnx.commit()
 		else:
 			return 'This username already exists!'
 
-	# Checks whether this username exists in the database
+	# Chequea si el nombre de usuario existe en la BBDD
 	def getByUsername(self, name):
 		query = "SELECT * from users WHERE name = '%s'" %(str(name).replace("'", "''"))
 		user = self.retrieveUser(query)
@@ -34,9 +37,10 @@ class AdminUser:
 		else:
 			"This username doesn't exist!"		
 
-	# Checks whether a username with this password exists in the database 
+	# Chequea si existe el nombre de usuario con esta contraseña en la BBDD
 	def getByUsernameAndPassword(self, name, password):
-		query = "SELECT * from users WHERE name = '%s' AND password = '%s'" %(str(name).replace("'", "''"), password.replace("'", "''"))
+		query = "SELECT * from users WHERE name = '%s' AND password = '%s'" \
+		%(str(name).replace("'", "''"), str(password).replace("'", "''"))
 		user = self.retrieveUser(query)
 		if user is not None and type (user) == User:
 			return user

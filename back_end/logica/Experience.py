@@ -1,6 +1,10 @@
 class ExperienceException(Exception):
 	pass
 
+class ExperienceNoValidException(ExperienceException):
+	def __init__(this):
+		ExperienceException.__init__(this, "experience debe ser un objeto de la clase Experience.")
+
 class IdNoValidException(ExperienceException):
 	def __init__(this):
 		ExperienceException.__init__(this, "id debe ser una tupla de enteros.")

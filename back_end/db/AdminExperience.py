@@ -12,6 +12,8 @@ class AdminExperience:
 		self.__cursor = self.__cnx.cursor()
 
 	def addExperience(self, experience):
+		if experience == None or type (experience) != Experience:
+			raise ExperienceNoValidException()		
 		adminTypeExperience = AdminTypeExperience()
 		retrievedExperience = self.getByName(experience.getName())
 		if retrievedExperience is None:
@@ -21,7 +23,8 @@ class AdminExperience:
 				adminTypeExperience.addTypeExperience(typeName)
 				type_db = adminTypeExperience.getByName(typeName)
 			id_type = type_db[0]
-			query = "INSERT INTO experiences(name,id_type) VALUES ('%s',%i)" %(experience.getName().replace("'", "''"), id_type)
+			query = "INSERT INTO experiences(name,id_type) VALUES ('%s',%i)" \
+			%(experience.getName().replace("'", "''"), id_type)
 			self.__cursor.execute(query)
 			self.__cnx.commit()
 		else:
@@ -29,7 +32,8 @@ class AdminExperience:
 
 	def getByName(self, name):
 		query = "SELECT e.name, t.name, e.id_exp FROM experiences e " \
-				"JOIN types_experiences t ON t.id_type = e.id_type WHERE e.name = '%s'" %(str(name).replace("'", "''"))
+				"JOIN types_experiences t ON t.id_type = e.id_type WHERE e.name = '%s'" \
+				%(str(name).replace("'", "''"))
 		self.__cursor.execute(query)
 		experience_db = self.__cursor.fetchone()
 		if experience_db is None:

@@ -4,6 +4,7 @@ sys.path.append('../')
 import mysql.connector
 from logica.Recomendation import *
 from logica.Rating import *
+from logica.User import *
 
 class AdminRecomendation:
 
@@ -12,12 +13,18 @@ class AdminRecomendation:
 		self.__cursor = self.__cnx.cursor()
 
 	def addRecomendation(self, recomendation, user):
+		if recomendation == None or type (recomendation) != Recomendation:
+			raise RecomendationNoValidException()			
+		if user == None or type (user) != User:
+			raise UserNoValidException()		
 		query = "INSERT INTO recommendations(id_exp, id_user, rating) VALUES (%i, %i, %f)" \
 		%(recomendation.getExperience().getId(), user.getId(), recomendation.getRating().getValue())
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
 	def getRecomendationsFromUser(self, user):
+		if user == None or type (user) != User:
+			raise UserNoValidException()	
 		query = "SELECT r.rating, e.name, e.id_exp, t.name, t.id_type from recommendations r " \
 				"JOIN users u ON u.id_user = r.id_user " \
 				"JOIN experiences e ON e.id_exp = r.id_exp " \

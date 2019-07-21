@@ -27,13 +27,13 @@ def addUsers(ratings):
 		adminUser.addUser(user)
 
 # Adding reviews to database
-def addReviews(ratings):
+def addReviews(ratings, min = 1, max = 5):
 	adminReview = AdminReview()
 	adminExperience = AdminExperience()
 	adminUser = AdminUser()
 	for index, row in ratings.iterrows():
 		experience = adminExperience.getByName(row['experience_name'])
 		user = adminUser.getByUsername(row['user_name'])
-		rating = Rating(row['rating'])
+		rating = Rating(row['rating'], min, max)
 		review = Review(experience, rating)
 		adminReview.addReview(review, user)

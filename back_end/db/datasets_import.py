@@ -20,7 +20,7 @@ type_experience = 'hotel'
 #addType(type_experience)
 #addExperiences(hotel_reviews, type_experience)
 #addUsers(hotel_reviews)
-addReviews(hotel_reviews)
+#addReviews(hotel_reviews)
 
 # Read dataset restaurants (csv)
 cols1 = ["userID", "placeID", "rating"]
@@ -33,10 +33,9 @@ restaurant_reviews = pd.merge(rating_final, restaurant_data)
 del restaurant_reviews['placeID']
 restaurant_reviews.columns = ['user_name', 'rating', 'experience_name']
 restaurant_reviews = restaurant_reviews.dropna()
-
 type_experience = 'restaurant'
 
-# addType(type_experience)
-# addExperiences(restaurant_reviews, type_experience)
-# addUsers(restaurant_reviews)
-# addReviews(restaurant_reviews)
+addType(type_experience)
+addExperiences(restaurant_reviews, type_experience)
+addUsers(restaurant_reviews)
+addReviews(restaurant_reviews, 0, 2)

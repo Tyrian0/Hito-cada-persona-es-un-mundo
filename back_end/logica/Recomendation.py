@@ -6,6 +6,10 @@ from logica.Rating import *
 class RecomendationException(Exception):
 	pass
 
+class RecomendationNoValidException(RecomendationException):
+	def __init__(this):
+		RecomendationException.__init__(this, "recomendation debe ser un objeto de la clase Recomendation.")	
+
 class IdNoValidException(RecomendationException):
 	def __init__(this):
 		RecomendationException.__init__(this, "id debe ser una tupla de enteros.")

@@ -14,12 +14,18 @@ class AdminTypeExperience:
 		self.__cursor = self.__cnx.cursor()
 
 	def addTypeExperience(self, name):
-		query = "INSERT INTO types_experiences(name) VALUES ('%s')" %(str(name).replace("'", "''"))
-		self.__cursor.execute(query)
-		self.__cnx.commit()
+		retrievedType = self.getByName(name)
+		if retrievedType is None:
+			query = "INSERT INTO types_experiences(name) VALUES ('%s')" \
+			%(str(name).replace("'", "''"))
+			self.__cursor.execute(query)
+			self.__cnx.commit()
+		else:
+			return 'Type of experience already exists!'
 
 	def getByName(self, name):
-		query = "SELECT * from types_experiences WHERE name = '%s'" %(str(name).replace("'", "''"))
+		query = "SELECT * from types_experiences WHERE name = '%s'" \
+		%(str(name).replace("'", "''"))
 		self.__cursor.execute(query)
 		type_experience = self.__cursor.fetchone()
 		return type_experience

@@ -4,6 +4,8 @@ sys.path.append('../')
 import mysql.connector
 from logica.Review import *
 from logica.Rating import *
+from logica.User import *
+from logica.Experience import *
 
 class AdminReview:
 
@@ -12,16 +14,24 @@ class AdminReview:
 		self.__cursor = self.__cnx.cursor(buffered = True)
 
 	def addReview(self, review, user):
+		if review == None or type (review) != Review:
+			raise ReviewNoValidException()
+		if user == None or type (user) != User:
+			raise UserNoValidException()
 		retrievedReview = self.getReviewFromUserAndExperience(user, review.getExperience())
 		if retrievedReview is None:
 			query = "INSERT INTO reviews(id_exp, id_user, rating) VALUES (%i, %i, %f)" \
-				%(review.getExperience().getId(), user.getId(), review.getRating().getValue())
+			%(review.getExperience().getId(), user.getId(), review.getRating().getValue())
 			self.__cursor.execute(query)
 			self.__cnx.commit()
 		else:
 			return 'You reviewed this experience before!'
 
 	def getReviewFromUserAndExperience(self, user, experience):
+		if user == None or type (user) != User:
+			raise UserNoValidException()
+		if experience == None or type (experience) != Experience:
+			raise ExperienceNoValidException()	
 		query = "SELECT * FROM reviews WHERE id_user = %i AND id_exp = %i" \
 			%(user.getId(), experience.getId())
 		self.__cursor.execute(query)
@@ -29,6 +39,8 @@ class AdminReview:
 		return review
 
 	def getReviewsFromUser(self, user):
+		if user == None or type (user) != User:
+			raise UserNoValidException()
 		query = "SELECT r.rating, e.name, e.id_exp, t.name, t.id_type from reviews r " \
 				"JOIN users u ON u.id_user = r.id_user " \
 				"JOIN experiences e ON e.id_exp = r.id_exp " \
