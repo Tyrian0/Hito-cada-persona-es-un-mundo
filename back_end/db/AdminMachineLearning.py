@@ -3,6 +3,7 @@ sys.path.append('../')
 
 import mysql.connector
 import pandas as pd
+import numpy as np
 
 from logica.User import *
 from logica.MachineLearning import *
@@ -15,36 +16,37 @@ class AdminMachineLearning:
 		self.__cursor = self.__cnx.cursor()
 
 	def getMachineLearning(self):
-		query = "SELECT e1.id_exp, e2.id_exp, c.value "  \
-				"from correlation_experiences c " \
-				"JOIN experiences e1 ON e1.id_exp = c.id_exp1 " \
-				"JOIN experiences e2 ON e2.id_exp = c.id_exp2 "
 		query = "SELECT * FROM correlation_experiences"
 		self.__cursor.execute(query)
 		machineLearning_db = self.__cursor.fetchall()
 		machineLearning = pd.DataFrame(machineLearning_db, columns=["id_exp1", "id_exp2", "value"])
-		print(machineLearning)
-		machineLearning1 = machineLearning.pivot(index=['id_exp1'],columns=['id_exp2'],values='value').corr(method='pearson', min_periods=1)
-		return machineLearning1
+		machineLearning = machineLearning.pivot_table(index=['id_exp1'],columns=['id_exp2'],values='value')
+		return machineLearning
 
 	def calculateCorrelations(self):
-		#query = "DELETE FROM correlation_experiences"
-		#self.__cursor.execute(query)
-		#self.__cnx.commit()
+		self.deleteCorrelations()
 		adminUser = AdminUser()
-		#users = adminUser.getAll()
-		correlations = self.getMachineLearning()
-		machineLearning = MachineLearning(correlations)
-		#machineLearning.train(users)
+		users = adminUser.getAll()
+		print('Num of users: ', len(users))
+		machineLearning = MachineLearning()
+		machineLearning.train(users)
 		correlations = machineLearning.getCorrelations()
-		table = correlations.melt()
-		print(table)
-		# for row in correlations.index:
-		# 	print(row)
-			# id_exp1 = row[0]
-			# id_exp2 = row[1]
-			# value = row[2]
-			# query = "INSERT INTO correlation_experiences(id_exp1, id_exp2, value) " \
-			# 		"VALUES (%i, %i, %f)" %(row[0], row[1], row[2])
-			# self.__cursor.execute(query)
-			# self.__cnx.commit()
+		for row in correlations.iterrows():
+			id_exp1 = row[0]
+			n_col = 0
+			print(len(row[1]))
+			while n_col < len(row[1]):
+				id_exp2 = row[1].keys()[n_col]
+				value = row[1].values[n_col]
+				if np.isnan(value) == False:
+					query = "INSERT INTO correlation_experiences(id_exp1, id_exp2, value) " \
+							"VALUES (%i, %i, %f)" %(id_exp1, id_exp2, value)
+					print(query)
+					self.__cursor.execute(query)
+					self.__cnx.commit()
+				n_col += 1
+
+	def deleteCorrelations(self):
+		query = "DELETE FROM correlation_experiences"
+		self.__cursor.execute(query)
+		self.__cnx.commit()
