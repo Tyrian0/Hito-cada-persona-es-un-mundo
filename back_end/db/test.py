@@ -6,17 +6,29 @@ from AdminTypeExperience import *
 from AdminExperience import *
 from AdminReview import *
 from AdminRecomendation import *
+from AdminMachineLearning import *
 from logica.User import *
 from logica.Experience import *
 from logica.Review import *
 from logica.Rating import *
 from logica.Recomendation import *
 
+# Testing AdminML
+adminMachineLearning = AdminMachineLearning()
+ml = adminMachineLearning.getMachineLearning()
+print(ml)
+#adminMachineLearning.calculateCorrelations()
+ml = adminMachineLearning.getMachineLearning()
+print(ml)
+
+
 # Testing AdminUser
-adminUser = AdminUser()
-user1 = adminUser.getByUsername('11melissa')
-user2 = adminUser.getByUsernameAndPassword('0Christy', '5677')
-print(user2)
+# adminUser = AdminUser()
+# user1 = adminUser.getByUsername('11melissa')
+# user2 = adminUser.getByUsernameAndPassword('0Christy', '1234')
+# for review in user2.getReviews():
+# 	print(review.getExperience().getName())
+# 	print(review.getRating().getValue())
 # Testing AdminRecomendation
 # adminRecomendation = AdminRecomendation()
 # experience = Experience('Hotel Alfa', 'hotels', 2)

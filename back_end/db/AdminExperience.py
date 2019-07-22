@@ -51,15 +51,15 @@ class AdminExperience:
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	# def getAll(self):
-	# 	query = "SELECT e.name, t.name, e.id_exp from experiences e " \
-	# 		"JOIN types_experiences t ON t.id_type = e.id_type"
-	# 	self.__cursor.execute(query)
-	# 	experiences_db = self.__cursor.fetchall()
-	# 	experiences = []
-	# 	for experience in experiences_db:
-	# 		experiences.append(Experience(experience[0], experience[1], experience[2]))
-	# 	return experiences
+	def getAll(self):
+		query = "SELECT e.name, t.name, e.id_exp from experiences e " \
+			"JOIN types_experiences t ON t.id_type = e.id_type"
+		self.__cursor.execute(query)
+		experiences_db = self.__cursor.fetchall()
+		experiences = []
+		for experience in experiences_db:
+			experiences.append(Experience(experience[0], experience[1], experience[2]))
+		return experiences
 
 	# def getById(self, id):
 	# 	query = "SELECT e.name, t.name, e.id_exp from experiences e " \

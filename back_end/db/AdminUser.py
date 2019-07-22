@@ -29,6 +29,9 @@ class AdminUser:
 			self.__cnx.commit()
 		else:
 			return 'This username already exists!'
+			
+	# def updateUser(self, user):
+	# 	addReview
 
 	# Chequea si el nombre de usuario existe en la BBDD
 	def getByUsername(self, name):
@@ -52,7 +55,7 @@ class AdminUser:
 	def retrieveUser(self, query):
 		adminReview = AdminReview()
 		adminRecomendation = AdminRecomendation()
-		#adminMachineLearning = AdminMachineLearning()		
+		adminMachineLearning = AdminMachineLearning()		
 		self.__cursor.execute(query)
 		user_db = self.__cursor.fetchone()
 		if user_db is None:
@@ -61,13 +64,12 @@ class AdminUser:
 			user = User(user_db[1], user_db[2], [], [], user_db[0])
 			reviews = adminReview.getReviewsFromUser(user)
 			# Código si guardásemos recomendaciones en base de datos:
-			recomendations = adminRecomendation.getRecomendationsFromUser(user)
-			user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
+			#recomendations = adminRecomendation.getRecomendationsFromUser(user)
+			#user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
 			# Código si calculamos recomendaciones cada vez:
-			# user = User(user_db[1], user_db[2], reviews, [], user_db[0])
-			# correlations = adminMachineLearning.getCorrelations()
-			# machineLearning = MachineLearning(correlations)
-			# machineLearning.recomendate(user)
+			user = User(user_db[1], user_db[2], reviews, [], user_db[0])
+			machineLearning = adminMachineLearning.getMachineLearning()
+			machineLearning.recomendate(user)
 			return user
 
 	def closeConnection(self):
@@ -79,19 +81,19 @@ class AdminUser:
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	# def getAll(self):
-	# 	adminReview = AdminReview()
-	# 	adminRecomendation = AdminRecomendation()
-	# 	query = "SELECT * from users"
-	# 	self.__cursor.execute(query)
-	# 	users_db = self.__cursor.fetchall()
-	# 	users = []
-	# 	for user_db in users_db:
-	# 		user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
-	# 		reviews = adminReview.getReviewsFromUser(user)
-	# 		recomendations = adminRecomendation.getRecomendationsFromUser(user)			
-	# 		users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
-	# 	return users
+	def getAll(self):
+		adminReview = AdminReview()
+		adminRecomendation = AdminRecomendation()
+		query = "SELECT * from users"
+		self.__cursor.execute(query)
+		users_db = self.__cursor.fetchall()
+		users = []
+		for user_db in users_db:
+			user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
+			reviews = adminReview.getReviewsFromUser(user)
+			recomendations = adminRecomendation.getRecomendationsFromUser(user)			
+			users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
+		return users
 
 	# def updateName(self, user):
 	# 	query = "UPDATE users SET name ='%s'  where id_user = %i" %(user.getName(), user.getId())
