@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request as req
-import AdminExperience, AdminUser
-import Rating, Review, User
+from db.AdminExperience import AdminExperience
+from db.AdminUser import AdminUser
+from logica.Rating import Rating
+from logica.Review import Review
+from logica.User import User
 
 app = Flask(__name__) #nuevo objeto
 
@@ -8,28 +11,41 @@ app = Flask(__name__) #nuevo objeto
 def review():
     experience_name = req.form["experience"]
     rating_value = req.form["rating"]
+    adminexperience = AdminExperience()
+    adminuser = AdminUser()
 
-	adminexperience = AdminExperience()
-	experience = adminexperience.getByName(experience_name)
-	if experience == None:
-		return 404
+    experience = adminexperience.getByName(experience_name)
+    if experience == None:
+        return 420
+    if rating_value > Rating.getMax() or rating_value < Rating.getMin():
+        return 421
 
-	if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-		return 404
+    user = adminuser.getByUsername("tester")
+    user.addReview(Review(experience, Rating(rating_value)))
 
-	rating = Rating(rating_value)
+    adminuser.updateUser(user)
 
-	review = Review(experience, rating)
+    adminesperience.close()
+    adminuser.close()
 
-	adminuser = AdminUser()
+    #Llamamos al método recomend para el PMV
+    return recomendate(user)
 
-	user_name = adminuser.getByUsername("tester")
 
-	user = User()
+#@app.route("/recomendate", methods=["POST"])
+#def recomendate ():
+def recomendate (user):
+    adminML = AdminMachineLearning()
+    ml = adminML.getMachineLearning()
 
-	user.addReview(review)
+    ml.recomendate(user)
 
-    return jsonify({"about": "¡Hola " + nombre + " " + apellido + "!"})
+    recomendations = []
+    for recomendation in user.getRecomendations():
+        recomendations.append(recomendation.toJSON())
 
+    adminML.close()
+
+    return recomendations
 
 app.run()# se encarga de ejecutar el servidor 5000

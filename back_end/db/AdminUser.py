@@ -7,8 +7,8 @@ from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
 #from logica.MachineLearning import *
-from AdminReview import *
-from AdminRecomendation import *
+from db.AdminReview import *
+from db.AdminRecomendation import *
 #from AdminMachineLearning import *
 
 class AdminUser:
