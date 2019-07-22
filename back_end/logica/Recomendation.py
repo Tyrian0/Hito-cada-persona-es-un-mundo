@@ -62,3 +62,9 @@ class Recomendation:
 		this.__rating = rating
 	def getRating(this):
 		return this.__rating
+
+
+	def toJSON(this):
+		return {"experience": this.getExperiece().toJSON(),\
+				"rating": this.getRating().getValue(),\
+				"id": this.getId()}
