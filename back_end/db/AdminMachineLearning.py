@@ -48,3 +48,7 @@ class AdminMachineLearning:
 			# 		"VALUES (%i, %i, %f)" %(row[0], row[1], row[2])
 			# self.__cursor.execute(query)
 			# self.__cnx.commit()
+
+	def closeConnection(self):
+		self.__cursor.close()
+		self.__cnx.close()

@@ -1,8 +1,28 @@
 from db.AdminExperience import AdminExperience
 from db.AdminUser import AdminUser
+from db.AdminMachineLearning import AdminMachineLearning
 from logica.Rating import Rating
 from logica.Review import Review
 from logica.User import User
+from logica.Experience import Experience
+from logica.MachineLearning import MachineLearning
+
+def inputExperience(experiences):
+    while True:
+        experiencia_nombre = input ("Introduzca una experiencia: ")
+        for experiencia in experiences:
+            if experiencia_nombre == experiencia.getName():
+                return experiencia_nombre
+        else:
+            print ("Experiencia no válida")
+            
+def inputRating():
+    while True:
+        rating = input ("Valora la experiencia (1-5): ")
+        if not rating.isdecimal() or float(rating) < Rating.getMin() or float(rating) > Rating.getMax():
+            print ("Valoración no válida")        
+        else:
+            return float(rating)
 
 adminExperiences = AdminExperience()
 experiences = adminExperiences.getAll()
@@ -16,4 +36,31 @@ adminExperiences.closeConnection()
 
 print (cadena %"EXPERIENCIA", "\t%s" %"TIPO")
 for experience in experiences:
-    print (cadena %experience.getName(), "\t%s" %experience.getType())
+    if experience.getType() == "restaurant":
+        print (cadena %experience.getName(), "\t%s" %experience.getType())
+
+user = User("tester", "password")
+
+nombre = inputExperience(experiences)
+valoracion = inputRating()
+user.addReview(Review(Experience(nombre, "restaurante"), Rating(valoracion)))
+continuar = input ("Desea continuar? (S/N) ")
+while continuar == "S" or continuar == "s":
+    nombre = inputExperience(experiences)
+    valoracion = inputRating()
+    continuar = input ("Desea continuar? (S/N) ")    
+    user.addReview(Review(Experience(nombre, "restaurante"), Rating(valoracion)))
+
+adminML = AdminMachineLearning()
+
+ml = adminML.getMachineLearning()
+ml.recomendate(user)
+
+for recomendation in user.getRecomendations():
+    print (cadena %recomendation.getExperience().getName(), "\t%s" %recomendation.getRating().getValue())
+    
+
+adminML.closeConnection()
+            
+
+    
