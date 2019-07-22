@@ -31,6 +31,17 @@ class AdminMachineLearning:
 		machineLearning = MachineLearning()
 		machineLearning.train(users)
 		correlations = machineLearning.getCorrelations()
+		table = correlations.melt()
+		print(table)
+		# for row in correlations.index:
+		# 	print(row)
+			# id_exp1 = row[0]
+			# id_exp2 = row[1]
+			# value = row[2]
+			# query = "INSERT INTO correlation_experiences(id_exp1, id_exp2, value) " \
+			# 		"VALUES (%i, %i, %f)" %(row[0], row[1], row[2])
+			# self.__cursor.execute(query)
+			# self.__cnx.commit()
 		for row in correlations.iterrows():
 			id_exp1 = row[0]
 			n_col = 0
@@ -50,3 +61,8 @@ class AdminMachineLearning:
 		query = "DELETE FROM correlation_experiences"
 		self.__cursor.execute(query)
 		self.__cnx.commit()
+
+	def closeConnection(self):
+		self.__cursor.close()
+		self.__cnx.close()
+
