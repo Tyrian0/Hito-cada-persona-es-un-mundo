@@ -6,7 +6,7 @@ import pandas as pd
 
 from logica.User import *
 from logica.MachineLearning import *
-from AdminUser import *
+from db.AdminUser import *
 
 class AdminMachineLearning:
 

@@ -3,7 +3,7 @@ sys.path.append('../')
 
 import mysql.connector
 from logica.Experience import *
-from AdminTypeExperience import *
+from db.AdminTypeExperience import *
 
 class AdminExperience:
 

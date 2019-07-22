@@ -11,42 +11,41 @@ app = Flask(__name__) #nuevo objeto
 def review():
     experience_name = req.form["experience"]
     rating_value = req.form["rating"]
+    adminexperience = AdminExperience()
+    adminuser = AdminUser()
 
-	adminexperience = AdminExperience()
-	adminuser = AdminUser()
+    experience = adminexperience.getByName(experience_name)
+    if experience == None:
+        return 420
+    if rating_value > Rating.getMax() or rating_value < Rating.getMin():
+        return 421
 
-	experience = adminexperience.getByName(experience_name)
-	if experience == None:
-		return 420
-	if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-		return 421
+    user = adminuser.getByUsername("tester")
+    user.addReview(Review(experience, Rating(rating_value)))
 
-	user = adminuser.getByUsername("tester")
-	user.addReview(Review(experience, Rating(rating_value)))
+    adminuser.updateUser(user)
 
-	adminuser.updateUser(user)
+    adminesperience.close()
+    adminuser.close()
 
-	adminesperience.close()
-	adminuser.close()
-
-	#Llamamos al método recomend para el PMV
-	return recomendate(user)
+    #Llamamos al método recomend para el PMV
+    return recomendate(user)
 
 
 #@app.route("/recomendate", methods=["POST"])
 #def recomendate ():
 def recomendate (user):
-	adminML = AdminMachineLearning()
-	ml = adminML.getMachineLearning()
+    adminML = AdminMachineLearning()
+    ml = adminML.getMachineLearning()
 
-	ml.recomendate(user)
+    ml.recomendate(user)
 
-	recomendations = []
-	for recomendation in user.getRecomendations():
-		recomendations.append(recomendation.toJSON())
+    recomendations = []
+    for recomendation in user.getRecomendations():
+        recomendations.append(recomendation.toJSON())
 
-	adminML.close()
+    adminML.close()
 
-	return recomendations
+    return recomendations
 
 app.run()# se encarga de ejecutar el servidor 5000
