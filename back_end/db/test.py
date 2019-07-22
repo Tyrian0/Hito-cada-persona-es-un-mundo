@@ -12,10 +12,23 @@ from logica.Experience import *
 from logica.Review import *
 from logica.Rating import *
 from logica.Recomendation import *
+from logica.MachineLearning import *
 
 # Adding correlations to DB
 adminMachineLearning = AdminMachineLearning()
-adminMachineLearning.calculateCorrelations()
+correlations = adminMachineLearning.getMachineLearning()
+machineLearning = MachineLearning(correlations)
+#print(correlations)
+#adminMachineLearning.calculateCorrelations()
+experience1 = Experience('Preambulo Wifi Zone Cafe', 'restaurant', 7885)
+experience2 = Experience('Luna Cafe', 'restaurant', 7874)
+rating1 = Rating(4)
+rating2 = Rating(5)
+review1 = Review(experience1, rating1)
+review2 = Review(experience2, rating2)
+user = User('Igor', '1234', [review1, review2], [], 30958)
+machineLearning.recomendate(user)
+print(user.getRecomendations())
 
 # experience1 = Experience('Port Aventura', 'Ocio', 1)
 # experience2 = Experience('Jamboree', 'Ocio', 2)
