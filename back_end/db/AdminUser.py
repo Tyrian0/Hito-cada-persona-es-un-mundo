@@ -29,9 +29,6 @@ class AdminUser:
 			self.__cnx.commit()
 		else:
 			return 'This username already exists!'
-			
-	# def updateUser(self, user):
-	# 	addReview
 
 	# Chequea si el nombre de usuario existe en la BBDD
 	def getByUsername(self, name):
@@ -94,6 +91,11 @@ class AdminUser:
 			recomendations = adminRecomendation.getRecomendationsFromUser(user)			
 			users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
 		return users
+
+	def deleteUser(self, user):
+		query = "DELETE FROM users WHERE id_user = %i" %(user.getId())
+		self.__cursor.execute(query)
+		self.__cnx.commit()
 
 	# def updateName(self, user):
 	# 	query = "UPDATE users SET name ='%s'  where id_user = %i" %(user.getName(), user.getId())
