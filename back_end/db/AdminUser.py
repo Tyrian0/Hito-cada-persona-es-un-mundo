@@ -6,7 +6,7 @@ from logica.User import *
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
-from logica.MachineLearning import *
+#from logica.MachineLearning import *
 from AdminReview import *
 from AdminRecomendation import *
 #from AdminMachineLearning import *
@@ -37,7 +37,7 @@ class AdminUser:
 		if user is not None and type (user) == User:
 			return user
 		else:
-			"This username doesn't exist!"		
+			return "This username doesn't exist!"		
 
 	# Chequea si existe el nombre de usuario con esta contraseña en la BBDD
 	def getByUsernameAndPassword(self, name, password):
@@ -47,7 +47,7 @@ class AdminUser:
 		if user is not None and type (user) == User:
 			return user
 		else:
-			"Ooops! Wrong password!"
+			return "Ooops! Wrong password!"
 
 	def retrieveUser(self, query):
 		adminReview = AdminReview()

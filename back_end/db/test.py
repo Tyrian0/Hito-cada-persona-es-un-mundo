@@ -12,6 +12,11 @@ from logica.Review import *
 from logica.Rating import *
 from logica.Recomendation import *
 
+# Testing AdminUser
+adminUser = AdminUser()
+user1 = adminUser.getByUsername('11melissa')
+user2 = adminUser.getByUsernameAndPassword('0Christy', '5677')
+print(user2)
 # Testing AdminRecomendation
 # adminRecomendation = AdminRecomendation()
 # experience = Experience('Hotel Alfa', 'hotels', 2)
@@ -35,12 +40,12 @@ from logica.Recomendation import *
 # adminReview.getReviewsFromUser(user)
 
 # Testing Admin User
-adminUser = AdminUser()
-user = User('Robb', 'dfjiog5075')
-adminUser.addUser(user)
-users = adminUser.getAll()
-for user in users:
-	print(user.getName())
+# adminUser = AdminUser()
+# user = User('Robb', 'dfjiog5075')
+# adminUser.addUser(user)
+# users = adminUser.getAll()
+# for user in users:
+# 	print(user.getName())
 
 # Testing AdminTypeExperience
 # adminTypeExperience = AdminTypeExperience()
