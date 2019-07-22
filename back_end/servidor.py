@@ -17,9 +17,9 @@ def review():
 
 	experience = adminexperience.getByName(experience_name)
 	if experience == None:
-		return 404
+		return 420
 	if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-		return 404
+		return 421
 
 	user = adminuser.getByUsername("tester")
 	user.addReview(Review(experience, Rating(rating_value)))
