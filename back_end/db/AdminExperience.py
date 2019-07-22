@@ -37,7 +37,7 @@ class AdminExperience:
 		self.__cursor.execute(query)
 		experience_db = self.__cursor.fetchone()
 		if experience_db is None:
-			return
+			return None
 		else:
 			experience = Experience(experience_db[0], experience_db[1], experience_db[2])
 			return experience
