@@ -12,7 +12,7 @@ def inputExperience(experiences):
         experiencia_nombre = input ("Introduzca una experiencia: ")
         for experiencia in experiences:
             if experiencia_nombre == experiencia.getName():
-                return experiencia_nombre
+                return experiencia
         else:
             print ("Experiencia no válida")
             
@@ -41,9 +41,9 @@ for experience in experiences:
 
 user = User("tester", "password")
 
-nombre = inputExperience(experiences)
+experiencia = inputExperience(experiences)
 valoracion = inputRating()
-user.addReview(Review(Experience(nombre, "restaurante"), Rating(valoracion)))
+user.addReview(Review(experiencia, Rating(valoracion)))
 continuar = input ("Desea continuar? (S/N) ")
 while continuar == "S" or continuar == "s":
     nombre = inputExperience(experiences)
@@ -52,12 +52,17 @@ while continuar == "S" or continuar == "s":
     user.addReview(Review(Experience(nombre, "restaurante"), Rating(valoracion)))
 
 adminML = AdminMachineLearning()
+#adminML.calculateCorrelations()
 
 ml = adminML.getMachineLearning()
 ml.recomendate(user)
 
 for recomendation in user.getRecomendations():
-    print (cadena %recomendation.getExperience().getName(), "\t%s" %recomendation.getRating().getValue())
+    for experience in experiences:
+        if experience.getId() == recomendation.getExperience().getId():
+                print (cadena %experience.getName(), "\t%g" %recomendation.getRating())
+            
+
     
 
 adminML.closeConnection()

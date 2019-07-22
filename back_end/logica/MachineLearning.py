@@ -1,4 +1,9 @@
 import pandas as pd
+from logica.Rating import Rating
+from logica.Review import Review
+from logica.User import User
+from logica.Experience import Experience
+from logica.Recomendation import Recomendation
 
 class MachineLearning:
     def __init__(self, correlations = None):
@@ -27,18 +32,17 @@ class MachineLearning:
         self.__setCorrelations(corrMatrix)
 
     def recomendate(self, user):
-    	diccionario = {}
+    	recomendations = {}
     	for experience in self.correlations:
-    		diccionario.update(experience, 0)
+    		recomendations[experience] = 0
     	# Recorremos las reviews del usuario.
     	for review in user.getReviews():
     		#regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
-    		for experience,correlation in self.correlations[review.getExperience().getName()].dropna().items():
-    			diccionario[experience] += correlation*review.getRating()
-    	recomendations = []
-    	for experience, rating in diccionario.items():
-    		recomendations.append(Recomendation(Experience(experience), rating))
-    	user.setRecomendations(recomendations)
+    		for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
+    			recomendations[experience] += correlation*review.getRating().getValue()
+    	for experience, rating in recomendations.items():
+            #WIP:Esto hay que arreglarlo
+    		user.addRecomendation(Recomendation(Experience("esto hay", "que arreglarlo", experience), rating))
 
     def __setCorrelations(self, correlations):
     	self.correlations = correlations

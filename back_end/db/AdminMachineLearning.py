@@ -19,9 +19,9 @@ class AdminMachineLearning:
 		query = "SELECT * FROM correlation_experiences"
 		self.__cursor.execute(query)
 		machineLearning_db = self.__cursor.fetchall()
-		machineLearning = pd.DataFrame(machineLearning_db, columns=["id_exp1", "id_exp2", "value"])
-		machineLearning = machineLearning.pivot_table(index=['id_exp1'],columns=['id_exp2'],values='value')
-		return machineLearning
+		corrMatrix = pd.DataFrame(machineLearning_db, columns=["id_exp1", "id_exp2", "value"])
+		corrMatrix = corrMatrix.pivot_table(index=['id_exp1'],columns=['id_exp2'],values='value')
+		return MachineLearning(corrMatrix)
 
 	def calculateCorrelations(self):
 		self.deleteCorrelations()
