@@ -52,8 +52,8 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 20rem;
-    padding-bottom: 20rem;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
   }
   header.masthead h1 {
     font-size: 3rem;
@@ -135,4 +135,8 @@ footer.footer {
   padding-bottom: 4rem;
 }
 
+.review{
+  background-color: white !important;
+  padding: 10% 0;
+}
 
