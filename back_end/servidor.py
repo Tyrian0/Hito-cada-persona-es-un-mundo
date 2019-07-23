@@ -13,7 +13,7 @@ app.secret_key = 'the_wheel_of_time'
 
 def login_user(username):
     session['username'] = username
-    return redirect(url_for('user/<username>'))
+    return redirect(url_for("user/'%s'" %(username)))
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -48,15 +48,20 @@ def register():
 
 @app.route('/user/<username>')
 def index(username):
+    adminUser = AdminUser()
     user = adminUser.getByUsername(username)
     user_json = json.dumps(user.__dict__)
-    return render_template('index.html', user = user_json)
+    if user.getReviews() == 0:
+        return render_template("review.html", user = user_json)
+    else:
+        return render_template("recomendacion.html", user = user_json)
 
 @app.route('/logout')
 def logout():
-    # remove the username from the session if it's there
+    # Elimina el username de session si está ahí
+    message = "Successfully logged out"
     session.pop('username', None)
-    return render_template('login.html')
+    return render_template('login.html', message = message)
 
 @app.route("/user/<username>/review", methods=["POST"])
 def review(username):
@@ -79,7 +84,7 @@ def review(username):
     adminUser.closeConnection()
 
     # Redirigimos a recomendar
-    return redirect(url_for('/user/<username>/recomendate'))
+    return redirect(url_for("/user/'%s'/recomendate" %(username)))
 
 @app.route("/user/<username>/recomendate", methods=["POST"])
 def recomendate(username):
