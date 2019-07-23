@@ -46,8 +46,12 @@ def register():
         error = "This username already exists!"
     return render_template('register.html', error = error)
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template("index.html")
+
 @app.route('/user/<username>')
-def index(username):
+def index_logged_in(username):
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
     user_json = json.dumps(user.__dict__)
