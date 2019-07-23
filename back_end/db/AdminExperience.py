@@ -61,12 +61,15 @@ class AdminExperience:
 			experiences.append(Experience(experience[0], experience[1], experience[2]))
 		return experiences
 
-	# def getById(self, id):
-	# 	query = "SELECT e.name, t.name, e.id_exp from experiences e " \
-	# 		"JOIN types_experiences t ON t.id_type = e.id_type " \
-	# 		"WHERE e.id_exp = %i" %(id)
-	# 	self.__cursor.execute(query)
-	# 	experience_db = self.__cursor.fetchone()
-	# 	if len(experience_db) > 0:
-	# 		experience = Experience(experience_db[0], experience_db[1], experience_db[2])
-	# 	return experience
+	def getById(self, id):
+		query = "SELECT e.name, t.name, e.id_exp from experiences e " \
+			"JOIN types_experiences t ON t.id_type = e.id_type " \
+			"WHERE e.id_exp = %i" %(id)
+		self.__cursor.execute(query)
+		experience_db = self.__cursor.fetchone()
+		if len(experience_db) == 3:
+			experience = Experience(experience_db[0], experience_db[1], experience_db[2])
+		else:
+			experience = None
+			
+		return experience

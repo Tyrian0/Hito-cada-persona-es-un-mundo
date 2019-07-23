@@ -4,11 +4,11 @@ from logica.Review import Review
 from logica.User import User
 from logica.Experience import Experience
 from logica.Recomendation import Recomendation
-
+from db.AdminExperience import AdminExperience
 class MachineLearning:
     def __init__(self, correlations = None):
-    	if correlations is not None:
-        	self.__setCorrelations(correlations)
+        if correlations is not None:
+            self.__setCorrelations(correlations)
 
     # def train(self, users):
     #     reviews = {"rating": [], "experience": []}
@@ -31,21 +31,28 @@ class MachineLearning:
         corrMatrix = userRatings.corr(method='pearson', min_periods=1)
         self.__setCorrelations(corrMatrix)
 
-    def recomendate(self, user):
-    	recomendations = {}
-    	for experience in self.correlations:
-    		recomendations[experience] = 0
-    	# Recorremos las reviews del usuario.
-    	for review in user.getReviews():
-    		#regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
-    		for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
-    			recomendations[experience] += correlation*review.getRating().getValue()
-    	for experience, rating in recomendations.items():
-            #WIP:Esto hay que arreglarlo
-    		user.addRecomendation(Recomendation(Experience("esto hay", "que arreglarlo", experience), rating))
+    def recomendate(self, user):    	
+        adminexperience = AdminExperience()
+
+        recomendations = {}
+        for experience in self.correlations:
+            recomendations[experience] = 0
+        # Recorremos las reviews del usuario.
+        for review in user.getReviews():
+            #regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
+            for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
+                if correlation < 0:
+                    recomendations[experience] += correlation*(review.getRating().getValue()-6)
+                else:
+                    recomendations[experience] += correlation*review.getRating().getValue()
+
+        for experience, rating in recomendations.items():
+            user.addRecomendation(Recomendation(adminexperience.getById(experience), rating))
+
+        adminexperience.closeConnection()
 
     def __setCorrelations(self, correlations):
-    	self.correlations = correlations
+        self.correlations = correlations
 
     def getCorrelations(self):
-    	return self.correlations
+        return self.correlations
