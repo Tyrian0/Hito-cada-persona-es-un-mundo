@@ -10,15 +10,6 @@ class MachineLearning:
         if correlations is not None:
             self.__setCorrelations(correlations)
 
-    # def train(self, users):
-    #     reviews = {"rating": [], "experience": []}
-    #     for user in users:
-    #         for review in user.getReviews():
-    #             reviews["experience"].append(review.getExperience().getId())
-    #             reviews["rating"].append(review.getRating().getValue())
-    #     corrMatrix = pd.DataFrame(data=reviews).pivot(columns='experience',values='rating').corr(method='pearson', min_periods=1)
-    #     self.__setCorrelations(corrMatrix)
-
     def train(self, users):
         reviews = {"rating": [], "experience": [], "user": []}
         for user in users:

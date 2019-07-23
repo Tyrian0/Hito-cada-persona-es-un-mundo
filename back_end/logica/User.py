@@ -1,6 +1,3 @@
-#from Experience import Experience
-#from Recomendation import Recomendation
-#from Review import Review
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
@@ -41,6 +38,11 @@ class RecomendationNoValidException(UserException):
 		UserException.__init__(this, "recomendation debe ser una instancia de Recomendation.")
 
 class User:
+	#Numero de recomendaciones que se devuelven con getRecomendations
+	@staticmethod
+	def getMaxRecomendations():
+		return 10
+
 	#Constructor
 		#id: opcional, si no se incluye no se crea atributo
 		#reviews: opcional, por defecto crea una lista vacía
@@ -105,8 +107,16 @@ class User:
 			if type(recomendation) != Recomendation:
 				raise RecomendationsNoValidException()
 		this.__recomendations = recomendations
+
+	#Devuelve las recomendaciones ordenadas por rating.
 	def getRecomendations(this):
-		return this.__recomendations
+		recomendations = this.__recomendations
+		recomendations.sort(reverse = True, key=lambda x : x.getRating())
+		for review in this.getReviews():	
+			for recomendation in recomendations:
+				if recomendation.getExperience() == review.getExperience():
+					recomendations.remove(recomendation)
+		return recomendations[:User.getMaxRecomendations()]
 
 	#Método para añadir una review a la lista.
 		#Si review no es un objeto de la clase Review se lanza una excepción.

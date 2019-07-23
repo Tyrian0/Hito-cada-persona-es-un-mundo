@@ -58,10 +58,8 @@ ml = adminML.getMachineLearning()
 ml.recomendate(user)
 
 recomendations = user.getRecomendations()
-recomendations.sort(reverse = True, key=lambda x : x.getRating())
 for recomendation in recomendations:
-    if recomendation.getRating() > 0:
-        print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating())
+    print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating())
             
 
     
