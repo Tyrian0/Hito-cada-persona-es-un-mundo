@@ -46,10 +46,10 @@ valoracion = inputRating()
 user.addReview(Review(experiencia, Rating(valoracion)))
 continuar = input ("Desea continuar? (S/N) ")
 while continuar == "S" or continuar == "s":
-    nombre = inputExperience(experiences)
+    experiencia = inputExperience(experiences)
     valoracion = inputRating()
     continuar = input ("Desea continuar? (S/N) ")    
-    user.addReview(Review(Experience(nombre, "restaurante"), Rating(valoracion)))
+    user.addReview(Review(experiencia, Rating(valoracion)))
 
 adminML = AdminMachineLearning()
 #adminML.calculateCorrelations()
@@ -57,9 +57,12 @@ adminML = AdminMachineLearning()
 ml = adminML.getMachineLearning()
 ml.recomendate(user)
 
-for recomendation in user.getRecomendations():
-    for experience in experiences:
-        if experience.getId() == recomendation.getExperience().getId():
+recomendations = user.getRecomendations()
+recomendations.sort(reverse = True, key=lambda x : x.getRating())
+for recomendation in recomendations:
+    if recomendation.getRating() > 0:
+        for experience in experiences:
+            if experience.getId() == recomendation.getExperience().getId():
                 print (cadena %experience.getName(), "\t%g" %recomendation.getRating())
             
 
