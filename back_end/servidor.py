@@ -15,43 +15,49 @@ def login_user(username):
     session['username'] = username
     return redirect(url_for("user/'%s'" %(username)))
 
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.form['username']
-    password = request.form['password']
-    adminUser = AdminUser()
-    error = None
-    user = adminUser.getByUsername(username)
-    if type(user) == User:
-        user = adminUser.getByUsernameAndPassword(username, password)
-        if type(user) == User:
-            return login_user(username)
-        else:
-            error = "Ooops! Wrong password!"
-    else:
-        error = "This username doesn't exist!"
-    return render_template('login.html', error=error)
-
-@app.route('/register', methods=['POST'])
-def register():
-    username = request.form['username']
-    password = request.form['password']
-    adminUser = AdminUser()
-    error = None
-    user = adminUser.getByUsername(username)
-    if type(user) != User:
-        adminUser.addUser(username, password)
-        return login_user(username)
-    else:
-        error = "This username already exists!"
-    return render_template('register.html', error = error)
-
 @app.route('/', methods=['GET'])
-def index():
+def landing():
     return render_template("index.html")
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        adminUser = AdminUser()
+        user = adminUser.getByUsername(username)
+        if type(user) == User:
+            user = adminUser.getByUsernameAndPassword(username, password)
+            if type(user) == User:
+                return login_user(username)
+            else:
+                error = "Ooops! Wrong password!"
+        else:
+            error = "This username doesn't exist!"
+    # the code below is executed if the request method
+    # was GET or the credentials were invalid
+    return render_template('login.html', error=error)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        adminUser = AdminUser()
+        user = adminUser.getByUsername(username)
+        if type(user) != User:
+            adminUser.addUser(username, password)
+            return login_user(username)
+        else:
+            error = "This username already exists!"
+    # the code below is executed if the request method
+    # was GET or the credentials were invalid
+    return render_template('register.html', error = error)
+
 @app.route('/user/<username>')
-def index_logged_in(username):
+def index(username):
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
     user_json = json.dumps(user.__dict__)
