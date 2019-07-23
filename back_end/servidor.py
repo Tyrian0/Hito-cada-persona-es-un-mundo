@@ -6,14 +6,16 @@ from db.AdminMachineLearning import AdminMachineLearning
 from logica.Rating import Rating
 from logica.Review import Review
 from logica.User import User
+from logica.Recomendation import Recomendation
 
-app = Flask(__name__, template_folder='../front_end') #nuevo objeto
+app = Flask(__name__, template_folder='../front_end', static_folder='../front_end') #nuevo objeto
 
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = 'the_wheel_of_time'
 
 def login_user(username):
     session['username'] = username
+    print('hello from login_user!!!!!!!!!!!!!')
     return redirect(url_for("index"))
 
 @app.route('/', methods=['GET'])
@@ -31,7 +33,7 @@ def login():
         if type(user) == User:
             user = adminUser.getByUsernameAndPassword(username, password)
             if type(user) == User:
-                return login_user(user)
+                return login_user(username)
             else:
                 error = "Ooops! Wrong password!"
         else:
@@ -60,15 +62,19 @@ def register():
 
 @app.route('/index')
 def index():
+    print('hello from index!!!!!!!!')
     username = session["username"]
     adminUser = AdminUser()
-    user = adminUser.getByUsername(username)
+    recomendations = adminUser.getByUsername(username).getRecomendations()
+    print(recomendations)
     # Object Recomendation is not JSON serializable
-    user_json = json.dumps(user.__dict__)
-    if user.getReviews() == 0:
-        return render_template("review.html", user = user_json)
+    #recomendations_json = json.dumps(recomendations.__dict__)
+    recomendations_json = json.dumps([recomendation.__dict__ for recomendation in recomendations])
+    print(recomendations_json)
+    if len(recomendations) == 0:
+        return render_template("review.html", recomendations = recomendations_json)
     else:
-        return render_template("recomendacion.html", user = user_json)
+        return render_template("recomendacion.html", recomendations = recomendations_json)
 
 @app.route('/logout')
 def logout():
@@ -77,31 +83,37 @@ def logout():
     session.pop('username', None)
     return render_template('login.html', message = message)
 
-@app.route("/review", methods=["POST"])
+@app.route("/review", methods=["GET", "POST"])
 def review():
-    username = session["username"]
-    experience_name = req.form["experience"]
-    rating_value = req.form["rating"]
     adminExperience = AdminExperience()
-    adminUser = AdminUser()
-    experience = adminExperience.getByName(experience_name)
-    if experience == None:
-        return 420
-    if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-        return 421
+    if request.method == 'POST':
+        username = session["username"]
+        adminUser = AdminUser()
+        experience_name = req.form["experience"]
+        rating_value = req.form["rating"]        
+        experience = adminExperience.getByName(experience_name)
+        if experience == None:
+            return 420
+        if rating_value > Rating.getMax() or rating_value < Rating.getMin():
+            return 421
 
-    user = adminUser.getByUsername(username)
-    user.addReview(Review(experience, Rating(rating_value)))
+        user = adminUser.getByUsername(username)
+        user.addReview(Review(experience, Rating(rating_value)))
 
-    adminUser.updateUser(user)
+        adminUser.updateUser(user)
 
-    adminExperience.closeConnection()
-    adminUser.closeConnection()
+        adminExperience.closeConnection()
+        adminUser.closeConnection()
 
-    # Redirigimos a recomendar
-    return redirect(url_for("recomendate"))
+        # Redirigimos a recomendar
+        return redirect(url_for("recomendate"))
+    else:
+        experiences = []
+        for experience in adminExperience.getAll():
+            experiences.append(experience.toJSON())
+        return render_template('review.html', experiences = experiences)
 
-@app.route("/recomendate", methods=["POST"])
+@app.route("/recomendate", methods=["GET"])
 def recomendate():
     username = session["username"]
     adminUser = AdminUser()
@@ -119,6 +131,6 @@ def recomendate():
     adminML.close()
     adminUser.close()
 
-    return recomendations
+    return render_template('recomendacion.html', recomendations = recomendations)
 
 app.run()# se encarga de ejecutar el servidor 5000
