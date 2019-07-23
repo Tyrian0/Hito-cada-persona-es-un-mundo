@@ -1,7 +1,8 @@
-from flask import Flask, session, escape, redirect, url_for, json, jsonify, render_template, request as req
+from flask import Flask, session, escape, redirect, url_for, json, jsonify, render_template, request
 
 from db.AdminExperience import AdminExperience
 from db.AdminUser import AdminUser
+from db.AdminMachineLearning import AdminMachineLearning
 from logica.Rating import Rating
 from logica.Review import Review
 from logica.User import User
@@ -13,7 +14,7 @@ app.secret_key = 'the_wheel_of_time'
 
 def login_user(username):
     session['username'] = username
-    return redirect(url_for("user/'%s'" %(username)))
+    return redirect(url_for("index"))
 
 @app.route('/', methods=['GET'])
 def landing():
@@ -23,14 +24,14 @@ def landing():
 def login():
     error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.getlist('user')[0]
+        password = request.form.getlist('password')[0]
         adminUser = AdminUser()
         user = adminUser.getByUsername(username)
         if type(user) == User:
             user = adminUser.getByUsernameAndPassword(username, password)
             if type(user) == User:
-                return login_user(username)
+                return login_user(user)
             else:
                 error = "Ooops! Wrong password!"
         else:
@@ -43,12 +44,13 @@ def login():
 def register():
     error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.getlist('user')[0]
+        password = request.form.getlist('password')[0]
         adminUser = AdminUser()
         user = adminUser.getByUsername(username)
         if type(user) != User:
-            adminUser.addUser(username, password)
+            user = User(username, password)
+            adminUser.addUser(user)
             return login_user(username)
         else:
             error = "This username already exists!"
@@ -56,10 +58,12 @@ def register():
     # was GET or the credentials were invalid
     return render_template('register.html', error = error)
 
-@app.route('/user/<username>')
-def index(username):
+@app.route('/index')
+def index():
+    username = session["username"]
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
+    # Object Recomendation is not JSON serializable
     user_json = json.dumps(user.__dict__)
     if user.getReviews() == 0:
         return render_template("review.html", user = user_json)
@@ -73,8 +77,9 @@ def logout():
     session.pop('username', None)
     return render_template('login.html', message = message)
 
-@app.route("/user/<username>/review", methods=["POST"])
-def review(username):
+@app.route("/review", methods=["POST"])
+def review():
+    username = session["username"]
     experience_name = req.form["experience"]
     rating_value = req.form["rating"]
     adminExperience = AdminExperience()
@@ -94,10 +99,11 @@ def review(username):
     adminUser.closeConnection()
 
     # Redirigimos a recomendar
-    return redirect(url_for("/user/'%s'/recomendate" %(username)))
+    return redirect(url_for("recomendate"))
 
-@app.route("/user/<username>/recomendate", methods=["POST"])
-def recomendate(username):
+@app.route("/recomendate", methods=["POST"])
+def recomendate():
+    username = session["username"]
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
 

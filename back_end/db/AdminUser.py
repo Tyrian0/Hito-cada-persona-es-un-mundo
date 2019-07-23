@@ -6,10 +6,10 @@ from logica.User import *
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
-#from logica.MachineLearning import *
+from logica.MachineLearning import *
 from db.AdminReview import *
 from db.AdminRecomendation import *
-#from AdminMachineLearning import *
+from db.AdminMachineLearning import *
 
 class AdminUser:
 
@@ -22,13 +22,21 @@ class AdminUser:
 		if user == None or type (user) != User:
 			raise UserNoValidException()
 		retrievedUser = self.getByUsername(user.getName())
-		if retrievedUser is None:
+		if type(retrievedUser) != User or retrievedUser is None:
 			query = "INSERT INTO users(name, password) VALUES ('%s', '%s')" \
 			%(user.getName().replace("'", "''"), user.getPassword().replace("'", "''"))
 			self.__cursor.execute(query)
 			self.__cnx.commit()
 		else:
 			return 'This username already exists!'
+
+	def getById(self, id):
+		query = "SELECT * from users WHERE id_user = %i" %(id)
+		user = self.retrieveUser(query)
+		if user is not None and type (user) == User:
+			return user
+		else:
+			return "This username doesn't exist!"
 
 	# Chequea si el nombre de usuario existe en la BBDD
 	def getByUsername(self, name):
