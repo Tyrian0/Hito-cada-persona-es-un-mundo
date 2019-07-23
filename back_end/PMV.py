@@ -61,9 +61,7 @@ recomendations = user.getRecomendations()
 recomendations.sort(reverse = True, key=lambda x : x.getRating())
 for recomendation in recomendations:
     if recomendation.getRating() > 0:
-        for experience in experiences:
-            if experience.getId() == recomendation.getExperience().getId():
-                print (cadena %experience.getName(), "\t%g" %recomendation.getRating())
+        print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating())
             
 
     
