@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `cada_persona_es_un_mundo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cada_persona_es_un_mundo`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cada_persona_es_un_mundo
@@ -185,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-22 23:17:58
+-- Dump completed on 2019-07-22 19:35:03

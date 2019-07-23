@@ -57,8 +57,17 @@ class Recomendation:
 	#Seter de rating
 		#Si rating no es un objeto de la clase Rating se lanza una excepción
 	def setRating(this, rating):
-		if rating == None or type (rating) != Rating:
-			raise RatingNoValidException()
+		#WIP: Esto hay que pensarlo mejor
+		#if rating == None or type (rating) != Rating:
+		#	raise RatingNoValidException()
 		this.__rating = rating
 	def getRating(this):
 		return this.__rating
+
+
+	def toJSON(this):
+		return {"experience": this.getExperiece().toJSON(),\
+				#"rating": this.getRating().getValue(),\				
+				#WIP: Corolario de "Esto hay que pensarlo mejor"
+				"rating": this.__rating,\
+				"id": this.getId()}

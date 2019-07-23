@@ -1,40 +1,58 @@
+import pandas as pd
+from logica.Rating import Rating
+from logica.Review import Review
+from logica.User import User
+from logica.Experience import Experience
+from logica.Recomendation import Recomendation
+from db.AdminExperience import AdminExperience
 class MachineLearning:
-    def __init__(self, correlations):
-        self.__setCorrelations(correlations)
- 
-	def train(self, users):
-		reviews = {"rating": [], "experience": []}
-		for user in users:
-			for review in user.getReviews():
-				reviews["experience"].append(review.getExperience().getName())
-				reviews["rating"].append(review.getRating().getValue())
-		corrMatrix = pd.DataFrame(data=reviews).pivot(columns=['experience'],values='rating').corr(method='pearson', min_periods=1)
-		self.__setCorrelations(corrMatrix)
+    def __init__(self, correlations = None):
+        if correlations is not None:
+            self.__setCorrelations(correlations)
 
-	def recomendate(self, user):
-		diccionario = {}
-		for experience in self.correlations:
-			dicionario.update(experience, 0)
-		# Recorremos las reviews del usuario.
-		for review in user.getReviews():
-			#regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.  	
-			for experience,correlation in self.correlations[review.getExperience().getName()].dropna().items():
-				diccionario[experience] += correlation*review.getRating()
-		recomendations = []
-		for experience, rating in diccionario.items():
-			recomendations.append(Recomendation(Experience(experience), rating))
-		user.setRecomendations(recomendations)
+    # def train(self, users):
+    #     reviews = {"rating": [], "experience": []}
+    #     for user in users:
+    #         for review in user.getReviews():
+    #             reviews["experience"].append(review.getExperience().getId())
+    #             reviews["rating"].append(review.getRating().getValue())
+    #     corrMatrix = pd.DataFrame(data=reviews).pivot(columns='experience',values='rating').corr(method='pearson', min_periods=1)
+    #     self.__setCorrelations(corrMatrix)
 
+    def train(self, users):
+        reviews = {"rating": [], "experience": [], "user": []}
+        for user in users:
+            for review in user.getReviews():
+                reviews["user"].append(user.getId())
+                reviews["experience"].append(review.getExperience().getId())
+                reviews["rating"].append(review.getRating().getValue())
+        df = pd.DataFrame.from_dict(reviews)
+        userRatings = df.pivot_table(index=['user'],columns=['experience'],values='rating')
+        corrMatrix = userRatings.corr(method='pearson', min_periods=1)
+        self.__setCorrelations(corrMatrix)
 
+    def recomendate(self, user):    	
+        adminexperience = AdminExperience()
 
-	def __setCorrelations(self, correlations):
-		self.correlations = correlations
+        recomendations = {}
+        for experience in self.correlations:
+            recomendations[experience] = 0
+        # Recorremos las reviews del usuario.
+        for review in user.getReviews():
+            #regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
+            for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
+                if correlation < 0:
+                    recomendations[experience] += correlation*(review.getRating().getValue()-6)
+                else:
+                    recomendations[experience] += correlation*review.getRating().getValue()
 
-	def getCorrelations(self):
-		return self.correlations
+        for experience, rating in recomendations.items():
+            user.addRecomendation(Recomendation(adminexperience.getById(experience), rating))
 
+        adminexperience.closeConnection()
 
+    def __setCorrelations(self, correlations):
+        self.correlations = correlations
 
-
-
-
+    def getCorrelations(self):
+        return self.correlations

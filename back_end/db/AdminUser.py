@@ -6,9 +6,9 @@ from logica.User import *
 from logica.Experience import *
 from logica.Recomendation import *
 from logica.Review import *
-from logica.MachineLearning import *
-from AdminReview import *
-from AdminRecomendation import *
+#from logica.MachineLearning import *
+from db.AdminReview import *
+from db.AdminRecomendation import *
 #from AdminMachineLearning import *
 
 class AdminUser:
@@ -37,7 +37,7 @@ class AdminUser:
 		if user is not None and type (user) == User:
 			return user
 		else:
-			"This username doesn't exist!"		
+			return "This username doesn't exist!"		
 
 	# Chequea si existe el nombre de usuario con esta contraseña en la BBDD
 	def getByUsernameAndPassword(self, name, password):
@@ -47,12 +47,12 @@ class AdminUser:
 		if user is not None and type (user) == User:
 			return user
 		else:
-			"Ooops! Wrong password!"
+			return "Ooops! Wrong password!"
 
 	def retrieveUser(self, query):
 		adminReview = AdminReview()
 		adminRecomendation = AdminRecomendation()
-		#adminMachineLearning = AdminMachineLearning()		
+		adminMachineLearning = AdminMachineLearning()		
 		self.__cursor.execute(query)
 		user_db = self.__cursor.fetchone()
 		if user_db is None:
@@ -61,13 +61,12 @@ class AdminUser:
 			user = User(user_db[1], user_db[2], [], [], user_db[0])
 			reviews = adminReview.getReviewsFromUser(user)
 			# Código si guardásemos recomendaciones en base de datos:
-			recomendations = adminRecomendation.getRecomendationsFromUser(user)
-			user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
+			#recomendations = adminRecomendation.getRecomendationsFromUser(user)
+			#user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
 			# Código si calculamos recomendaciones cada vez:
-			# user = User(user_db[1], user_db[2], reviews, [], user_db[0])
-			# correlations = adminMachineLearning.getCorrelations()
-			# machineLearning = MachineLearning(correlations)
-			# machineLearning.recomendate(user)
+			user = User(user_db[1], user_db[2], reviews, [], user_db[0])
+			machineLearning = adminMachineLearning.getMachineLearning()
+			machineLearning.recomendate(user)
 			return user
 
 	def closeConnection(self):
@@ -79,19 +78,24 @@ class AdminUser:
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
-	# def getAll(self):
-	# 	adminReview = AdminReview()
-	# 	adminRecomendation = AdminRecomendation()
-	# 	query = "SELECT * from users"
-	# 	self.__cursor.execute(query)
-	# 	users_db = self.__cursor.fetchall()
-	# 	users = []
-	# 	for user_db in users_db:
-	# 		user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
-	# 		reviews = adminReview.getReviewsFromUser(user)
-	# 		recomendations = adminRecomendation.getRecomendationsFromUser(user)			
-	# 		users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
-	# 	return users
+	def getAll(self):
+		adminReview = AdminReview()
+		adminRecomendation = AdminRecomendation()
+		query = "SELECT * from users"
+		self.__cursor.execute(query)
+		users_db = self.__cursor.fetchall()
+		users = []
+		for user_db in users_db:
+			user = User(user_db[1], str(user_db[2]), [], [], user_db[0])
+			reviews = adminReview.getReviewsFromUser(user)
+			recomendations = adminRecomendation.getRecomendationsFromUser(user)			
+			users.append(User(user_db[1], str(user_db[2]), reviews, recomendations, user_db[0]))
+		return users
+
+	def deleteUser(self, user):
+		query = "DELETE FROM users WHERE id_user = %i" %(user.getId())
+		self.__cursor.execute(query)
+		self.__cnx.commit()
 
 	# def updateName(self, user):
 	# 	query = "UPDATE users SET name ='%s'  where id_user = %i" %(user.getName(), user.getId())

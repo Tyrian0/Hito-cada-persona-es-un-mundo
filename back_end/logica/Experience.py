@@ -54,3 +54,8 @@ class Experience:
 		this.__type = type
 	def getType(this):
 		return this.__type
+
+	def toJSON (this):
+		return {"name": this.getName(),\
+				"type": this.getType(),\
+				"id": this.getId()}

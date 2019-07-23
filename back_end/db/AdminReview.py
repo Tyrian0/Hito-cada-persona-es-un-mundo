@@ -65,6 +65,11 @@ class AdminReview:
 		self.__cursor.execute(query)
 		self.__cnx.commit()
 
+	def deleteReviewsFromUser(self, user):
+		query = "DELETE FROM reviews WHERE id_user = %i" %(user.getId())
+		self.__cursor.execute(query)
+		self.__cnx.commit()
+
 	# def getAll(self):
 	# 	query = "SELECT * from reviews"
 	# 	self.__cursor.execute(query)
