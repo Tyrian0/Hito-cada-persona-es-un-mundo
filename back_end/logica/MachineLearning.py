@@ -24,18 +24,18 @@ class MachineLearning:
 
     def recomendate(self, user):    	
         adminexperience = AdminExperience()
-
         recomendations = {}
         for experience in self.correlations:
             recomendations[experience] = 0
         # Recorremos las reviews del usuario.
         for review in user.getReviews():
-            #regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
-            for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
-                if correlation < 0:
-                    recomendations[experience] += correlation*(review.getRating().getValue()-6)
-                else:
-                    recomendations[experience] += correlation*review.getRating().getValue()
+            if review.getExperience().getId() in self.correlations.columns.values.tolist():
+                #regresión lineal y = mx + b. 1. Consigo el rating. 2. Set del rating.
+                for experience,correlation in self.correlations[review.getExperience().getId()].dropna().items():
+                    if correlation < 0:
+                        recomendations[experience] += correlation*(review.getRating().getValue()-6)
+                    else:
+                        recomendations[experience] += correlation*review.getRating().getValue()
 
         for experience, rating in recomendations.items():
             user.addRecomendation(Recomendation(adminexperience.getById(experience), rating))
