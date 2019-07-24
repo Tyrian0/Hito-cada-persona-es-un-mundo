@@ -106,7 +106,7 @@ def review():
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
 
-            type = experience['type']
+            type = experience.getType()
             if type not in types:
                 types.append(type)
         return render_template('review.html', username=username, experiences = experiences, types = types)
