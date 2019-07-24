@@ -15,9 +15,9 @@ from logica.Recomendation import *
 from logica.MachineLearning import *
 
 adminExperience = AdminExperience()
-username = 'jose'
+username = 'juan'
 adminUser = AdminUser()
-experience_name = 'puesto de gorditas'
+experience_name = '11th Avenue Hotel Hostel'
 rating_value = 2
 experience = adminExperience.getByName(experience_name)
 print(experience.getId())
