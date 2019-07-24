@@ -8,7 +8,7 @@ from logica.Review import Review
 from logica.User import User
 from logica.Recomendation import Recomendation
 
-app = Flask(__name__, template_folder='../front_end', static_folder='../front_end/css') #nuevo objeto
+app = Flask(__name__, template_folder='../front_end', static_folder='../front_end') #nuevo objeto
 
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = 'the_wheel_of_time'
