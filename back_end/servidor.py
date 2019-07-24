@@ -101,13 +101,10 @@ def review():
         # Redirigimos a recomendar
         return redirect(url_for("recomendate"))
     else:
-        if session["username"] is not None:
-            return render_template('login.html')
-        else:
-            experiences = []
-            for experience in adminExperience.getAll():
-                experiences.append(experience.toJSON())
-            return render_template('review.html', experiences = experiences)
+        experiences = []
+        for experience in adminExperience.getAll():
+            experiences.append(experience.toJSON())
+        return render_template('review.html', experiences = experiences)
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
