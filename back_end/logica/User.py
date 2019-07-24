@@ -124,11 +124,14 @@ class User:
         if not this.hasRecomendations():
             raise HasNotRecomendationsException ()
         recomendations = this.__recomendations
-        recomendations.sort(reverse = True, key=lambda x : x.getRating())
+        return this.filterRecomendations(recomendations)
+
+    def filterRecomendations(this, recomendations):
         for review in this.getReviews():    
-            for recomendation in recomendations:
+            for recomendation in recomendations.copy():
                 if recomendation.getExperience() == review.getExperience():
                     recomendations.remove(recomendation)
+        recomendations.sort(reverse = True, key=lambda x : x.getRating())
         return recomendations[:User.getMaxRecomendations()]
 
     #Método para añadir una review a la lista.
@@ -149,4 +152,14 @@ class User:
         return bool(this.__reviews)
     
     def hasRecomendations (this):
-        return bool(this.__recomendarions)
+        return bool(this.__recomendations)
+
+    def getRecomendationsByType(this, type):
+        if not this.hasRecomendations():
+            raise HasNotRecomendationsException ()
+        recomendations = this.__recomendations
+        for recomendation in recomendations.copy():
+            if recomendation.getExperience().getType() != type:
+                recomendations.remove(recomendation)
+        recomendations = this.filterRecomendations(recomendations)        
+        return recomendations

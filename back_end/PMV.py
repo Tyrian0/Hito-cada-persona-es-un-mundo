@@ -37,7 +37,8 @@ adminExperiences.closeConnection()
 print (cadena %"EXPERIENCIA", "\t%s" %"TIPO")
 for experience in experiences:
     if experience.getType() == "restaurant":
-        print (cadena %experience.getName(), "\t%s" %experience.getType())
+        print(cadena %experience.getName(), "\t%s" %experience.getType())
+
 
 user = User("tester", "password")
 
@@ -57,9 +58,9 @@ adminML = AdminMachineLearning()
 ml = adminML.getMachineLearning()
 ml.recomendate(user)
 
-recomendations = user.getRecomendations()
+recomendations = user.getRecomendationsByType("restaurant")
 for recomendation in recomendations:
-    print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating())
+    print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating(), "\t%s" %recomendation.getExperience().getType())
             
 
     

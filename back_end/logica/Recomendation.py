@@ -66,7 +66,7 @@ class Recomendation:
 
 
 	def toJSON(this):
-		return {"experience": this.getExperiece().toJSON(),\
+		return {"experience": this.getExperience().toJSON(),\
 				#"rating": this.getRating().getValue(),\				
 				#WIP: Corolario de "Esto hay que pensarlo mejor"
 				"rating": this.__rating,\

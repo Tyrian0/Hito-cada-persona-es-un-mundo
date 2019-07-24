@@ -9,7 +9,12 @@ class AdminExperience:
 
 	def __init__(self):
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
-		self.__cursor = self.__cnx.cursor()
+		
+	def __openCursor(self):
+		return self.__cnx.cursor()
+
+	def __closeCursor(self, cursor):
+		cursor.close()
 
 	def addExperience(self, experience):
 		if experience == None or type (experience) != Experience:
@@ -25,8 +30,10 @@ class AdminExperience:
 			id_type = type_db[0]
 			query = "INSERT INTO experiences(name,id_type) VALUES ('%s',%i)" \
 			%(experience.getName().replace("'", "''"), id_type)
-			self.__cursor.execute(query)
+			cursor = self.__openCursor()
+			cursor.execute(query)
 			self.__cnx.commit()
+			self.__closeCursor()
 		else:
 			return 'This experience already exists!'
 
@@ -34,16 +41,19 @@ class AdminExperience:
 		query = "SELECT e.name, t.name, e.id_exp FROM experiences e " \
 				"JOIN types_experiences t ON t.id_type = e.id_type WHERE e.name = '%s'" \
 				%(str(name).replace("'", "''"))
-		self.__cursor.execute(query)
+		cursor = self.__openCursor()
+		cursor.execute(query)
+
 		experience_db = self.__cursor.fetchone()
 		if experience_db is None:
-			return None
+			experience = None
 		else:
 			experience = Experience(experience_db[0], experience_db[1], experience_db[2])
-			return experience
-
+			
+			
+		self.__closeCursor()
+		return experience
 	def closeConnection(self):
-		self.__cursor.close()
 		self.__cnx.close()
 
 	def deleteAll(self):
