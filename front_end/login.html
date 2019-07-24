@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>Login | Hito</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-light bg-light static-top">
       <div class="col-xs-3 col-md-3 col-lg-3">
-        <a href="index.html">
+        <a href="/">
           <img class="float-left" src="/front_end/img/logo.png">
         </a> 
       </div>
@@ -55,6 +55,12 @@
                   <input name="remeber-pass" type="checkbox" class="custom-control-input" id="customCheck1">
                   <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
                 </div>
+                <div class="custom-control custom-checkbox mb-3">
+                  {% if error %}
+                  <label>{{error}}</label>
+                  {% endif %}
+
+                </div>
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Iniciar sesión</button>
               </form>
             </div>
@@ -64,12 +70,8 @@
     </div>
 
 
-
-
-
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
