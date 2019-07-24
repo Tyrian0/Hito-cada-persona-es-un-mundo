@@ -79,8 +79,8 @@ def logout():
 @app.route("/review", methods=["GET", "POST"])
 def review():
     adminExperience = AdminExperience()
+    username = session["username"]
     if request.method == 'POST':
-        username = session["username"]
         adminUser = AdminUser()
         experience_name = req.form["experience"]
         rating_value = req.form["rating"]        
