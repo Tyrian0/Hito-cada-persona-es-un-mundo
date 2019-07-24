@@ -16,7 +16,7 @@ class AdminExperience:
 			raise ExperienceNoValidException()		
 		adminTypeExperience = AdminTypeExperience()
 		retrievedExperience = self.getByName(experience.getName())
-		if retrievedExperience is None:
+		if type(retrievedExperience) != Experience or retrievedExperience is None:
 			typeName = experience.getType()
 			type_db = adminTypeExperience.getByName(typeName)
 			if len(type_db) == 0:
