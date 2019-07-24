@@ -57,6 +57,14 @@ class AdminUser:
 		else:
 			return "Ooops! Wrong password!"
 
+	def updateUser(self, user):
+		query = "UPDATE users SET name = '%s', password = '%s' WHERE id_user = %i " \
+		%(user.getName(), user.getPassword(), user.getId())
+		self.__cursor.execute(query)
+		self.__cnx.commit()
+		for review in user.getReviews():
+			adminReview.addReview(review, user)
+
 	def retrieveUser(self, query):
 		adminReview = AdminReview()
 		adminRecomendation = AdminRecomendation()

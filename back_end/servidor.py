@@ -104,7 +104,7 @@ def review():
         experiences = []
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
-        return render_template('review.html', experiences = experiences)
+        return render_template('review.html', username = username, experiences = experiences)
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
