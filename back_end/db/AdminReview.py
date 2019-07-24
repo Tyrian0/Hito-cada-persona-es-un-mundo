@@ -32,10 +32,16 @@ class AdminReview:
 			raise UserNoValidException()
 		if experience == None or type (experience) != Experience:
 			raise ExperienceNoValidException()	
-		query = "SELECT * FROM reviews WHERE id_user = %i AND id_exp = %i" \
-			%(user.getId(), experience.getId())
+		query = "SELECT r.id_exp, e.name, r.id_user, r.rating FROM reviews r " \
+				"JOIN experiences e ON r.id_exp = e.id_exp " \
+				"WHERE r.id_user = %i AND r.id_exp = %i" %(user.getId(), experience.getId())
 		self.__cursor.execute(query)
-		review = self.__cursor.fetchone()
+		review_db = self.__cursor.fetchone()
+		if review_db is None:
+			review = None
+		else:
+			rating = Rating(review_db[3])
+			review = Review(experience, rating)
 		return review
 
 	def getReviewsFromUser(self, user):

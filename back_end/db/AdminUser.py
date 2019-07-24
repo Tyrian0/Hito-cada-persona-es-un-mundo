@@ -60,7 +60,7 @@ class AdminUser:
 	def updateUser(self, user):
 		adminReview = AdminReview()
 		retrievedUser = self.getByUsernameAndPassword(user.getName(), user.getPassword())
-		if type(retrievedUser) != User or retrievedUser is None:
+		if type(retrievedUser) == User:
 			query = "UPDATE users SET name = '%s', password = '%s' WHERE id_user = %i " \
 			%(user.getName(), user.getPassword(), user.getId())
 			self.__cursor.execute(query)
@@ -71,7 +71,7 @@ class AdminUser:
 	def retrieveUser(self, query):
 		adminReview = AdminReview()
 		adminRecomendation = AdminRecomendation()
-		adminMachineLearning = AdminMachineLearning()		
+		adminMachineLearning = AdminMachineLearning()
 		self.__cursor.execute(query)
 		user_db = self.__cursor.fetchone()
 		if user_db is None:
@@ -80,10 +80,6 @@ class AdminUser:
 			user = User(user_db[1], user_db[2], [], [], user_db[0])
 			user.setReviews(adminReview.getReviewsFromUser(user))
 			if user.hasReviews():
-			# Código si guardásemos recomendaciones en base de datos:
-			#recomendations = adminRecomendation.getRecomendationsFromUser(user)
-			#user = User(user_db[1], user_db[2], reviews, recomendations, user_db[0])
-			# Código si calculamos recomendaciones cada vez:
 				machineLearning = adminMachineLearning.getMachineLearning()
 				machineLearning.recomendate(user)
 			return user

@@ -69,5 +69,5 @@ class Recomendation:
 		return {"experience": this.getExperience().toJSON(),\
 				#"rating": this.getRating().getValue(),\				
 				#WIP: Corolario de "Esto hay que pensarlo mejor"
-				"rating": this.__rating,\
-				"id": this.getId()}
+				"rating": this.__rating}
+				#"id": this.getId()}

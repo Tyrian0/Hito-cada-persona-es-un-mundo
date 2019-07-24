@@ -85,14 +85,15 @@ def review():
         experience_name = request.form.getlist('experience')[0]
         rating_value = float(request.form.getlist('rating')[0])
         experience = adminExperience.getByName(experience_name)
-        
+        rating = Rating(rating_value)
         if experience == None:
             return 420
         # if rating_value > Rating.getMax() or rating_value < Rating.getMin():
         #     return 421
 
         user = adminUser.getByUsername(username)
-        user.addReview(Review(experience, Rating(rating_value)))
+        review = Review(experience, rating)
+        user.addReview(review)
 
         adminUser.updateUser(user)
 
@@ -127,8 +128,8 @@ def recomendate():
     for recomendation in user.getRecomendations():
         recomendations.append(recomendation.toJSON())
 
-    adminML.close()
-    adminUser.close()
+    adminML.closeConnection()
+    adminUser.closeConnection()
 
     return render_template('recomendacion.html', recomendations = recomendations)
 
