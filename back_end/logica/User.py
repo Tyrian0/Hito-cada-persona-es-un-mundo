@@ -149,4 +149,4 @@ class User:
         return bool(this.__reviews)
     
     def hasRecomendations (this):
-        return bool(this.__recomendarions)
+        return bool(this.__recomendations)

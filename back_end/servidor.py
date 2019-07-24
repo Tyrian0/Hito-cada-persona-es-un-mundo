@@ -106,6 +106,7 @@ def review():
         types = []
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
+
             type = experience['type']
             if type not in types:
                 types.append(type)

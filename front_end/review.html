@@ -94,8 +94,8 @@
         </div>
         <div class="col-lg-4">
           <select class="form-control" name="type" value="restaurant">
-            {% for i in experiences %}
-              <option>{{i["type["restaurant"]"]}}</option>
+            {% for i in types %}
+              <option>{{i}}</option>
             {% endfor %}
           </select>
           {% else %}
