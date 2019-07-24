@@ -58,6 +58,7 @@ class AdminUser:
 			return "Ooops! Wrong password!"
 
 	def updateUser(self, user):
+		adminReview = AdminReview()
 		retrievedUser = self.getByUsernameAndPassword(user.getName(), user.getPassword())
 		if type(retrievedUser) != User or retrievedUser is None:
 			query = "UPDATE users SET name = '%s', password = '%s' WHERE id_user = %i " \
