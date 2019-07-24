@@ -82,8 +82,8 @@ def review():
     username = session["username"]
     if request.method == 'POST':
         adminUser = AdminUser()
-        experience_name = form.getlist('experience')[0]
-        rating_value = form.getlist('rating')[0] 
+        experience_name = request.form.getlist('experience')[0]
+        rating_value = request.form.getlist('rating')[0]
         experience = adminExperience.getByName(experience_name)
         
         if experience == None:
