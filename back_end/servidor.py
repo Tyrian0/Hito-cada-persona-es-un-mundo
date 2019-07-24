@@ -110,12 +110,6 @@ def review():
                 types.append(type)
         return render_template('review.html', username=username, experiences = experiences, types = types)
 
-genders = []
-for person in people:
-    gender = person['gender']
-    if gender not in genders:
-        genders.append(gender)
-
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
     username = session["username"]
