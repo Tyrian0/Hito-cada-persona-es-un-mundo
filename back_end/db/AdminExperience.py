@@ -11,8 +11,7 @@ class AdminExperience:
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
 		
 	def __getCursor(self):
-		return self.__cnx.cursor()
-		
+		return self.__cnx.cursor()		
 
 	def addExperience(self, experience):
 		if experience == None or type (experience) != Experience:

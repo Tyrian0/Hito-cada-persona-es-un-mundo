@@ -13,14 +13,18 @@ class AdminMachineLearning:
 
 	def __init__(self):
 		self.__cnx = mysql.connector.connect(user='root', password='root', host='localhost', database='cada_persona_es_un_mundo')
-		self.__cursor = self.__cnx.cursor()
+		
+	def __getCursor(self):
+		return self.__cnx.cursor()		
 
 	def getMachineLearning(self):
+		cursor = self.__getCursor()
 		query = "SELECT * FROM correlation_experiences"
-		self.__cursor.execute(query)
-		machineLearning_db = self.__cursor.fetchall()
+		cursor.execute(query)
+		machineLearning_db = cursor.fetchall()
 		corrMatrix = pd.DataFrame(machineLearning_db, columns=["id_exp1", "id_exp2", "value"])
 		corrMatrix = corrMatrix.pivot_table(index=['id_exp1'],columns=['id_exp2'],values='value')
+		cursor.close()
 		return MachineLearning(corrMatrix)
 
 	def calculateCorrelations(self):
@@ -37,18 +41,21 @@ class AdminMachineLearning:
 				id_exp2 = row[1].keys()[n_col]
 				value = row[1].values[n_col]
 				if np.isnan(value) == False:
+					cursor = self.__getCursor()
 					query = "INSERT INTO correlation_experiences(id_exp1, id_exp2, value) " \
 							"VALUES (%i, %i, %f)" %(id_exp1, id_exp2, value)
-					self.__cursor.execute(query)
+					cursor.execute(query)
 					self.__cnx.commit()
+					cursor.close()
 				n_col += 1
 
 	def deleteCorrelations(self):
+		cursor = self.__getCursor()
 		query = "DELETE FROM correlation_experiences"
-		self.__cursor.execute(query)
+		cursor.execute(query)
 		self.__cnx.commit()
+		cursor.close()
 
 	def closeConnection(self):
-		self.__cursor.close()
 		self.__cnx.close()
 
