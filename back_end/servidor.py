@@ -15,7 +15,6 @@ app.secret_key = 'the_wheel_of_time'
 
 def login_user(username):
     session['username'] = username
-    print('hello from login_user!!!!!!!!!!!!!')
     return redirect(url_for("index"))
 
 @app.route('/', methods=['GET'])
@@ -62,19 +61,13 @@ def register():
 
 @app.route('/index')
 def index():
-    print('hello from index!!!!!!!!')
     username = session["username"]
     adminUser = AdminUser()
-    recomendations = adminUser.getByUsername(username).getRecomendations()
-    print(recomendations)
-    # Object Recomendation is not JSON serializable
-    #recomendations_json = json.dumps(recomendations.__dict__)
-    recomendations_json = json.dumps([recomendation.__dict__ for recomendation in recomendations])
-    print(recomendations_json)
-    if len(recomendations) == 0:
-        return render_template("review.html", recomendations = recomendations_json)
+    hasReviews = adminUser.getByUsername(username).hasReviews()
+    if hasReviews:
+        return redirect(url_for("recomendate"))
     else:
-        return render_template("recomendacion.html", recomendations = recomendations_json)
+        return redirect(url_for("review"))
 
 @app.route('/logout')
 def logout():
@@ -86,16 +79,17 @@ def logout():
 @app.route("/review", methods=["GET", "POST"])
 def review():
     adminExperience = AdminExperience()
+    username = session["username"]
     if request.method == 'POST':
-        username = session["username"]
         adminUser = AdminUser()
-        experience_name = req.form["experience"]
-        rating_value = req.form["rating"]        
+        experience_name = request.form.getlist('experience')[0]
+        rating_value = float(request.form.getlist('rating')[0])
         experience = adminExperience.getByName(experience_name)
+        
         if experience == None:
             return 420
-        if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-            return 421
+        # if rating_value > Rating.getMax() or rating_value < Rating.getMin():
+        #     return 421
 
         user = adminUser.getByUsername(username)
         user.addReview(Review(experience, Rating(rating_value)))
@@ -109,9 +103,14 @@ def review():
         return redirect(url_for("recomendate"))
     else:
         experiences = []
+        types = []
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
-        return render_template('review.html', experiences = experiences)
+
+            type = experience.getType()
+            if type not in types:
+                types.append(type)
+        return render_template('review.html', username=username, experiences = experiences, types = types)
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
@@ -120,9 +119,9 @@ def recomendate():
     user = adminUser.getByUsername(username)
 
     adminML = AdminMachineLearning()
-    ml = adminML.getMachineLearning()
+    correlations = adminML.getMachineLearning()
 
-    ml.recomendate(user)
+    correlations.recomendate(user)
 
     recomendations = []
     for recomendation in user.getRecomendations():

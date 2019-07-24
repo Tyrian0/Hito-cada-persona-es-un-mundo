@@ -43,7 +43,7 @@ class HasNotRecomendationException(UserException):
 
 class HasNotReviewsException(UserException):
     def __init__(this):
-        UserException.__init__(this, "El usuario no tiene recomendaciones.")
+        UserException.__init__(this, "El usuario no tiene reviews.")
 
 class User:
     #Numero de recomendaciones que se devuelven con getRecomendations
@@ -60,7 +60,7 @@ class User:
             this.setId(id)
         this.__setName(name)
         this.__setPassword(password)
-        this.__setReviews(reviews)
+        this.setReviews(reviews)
         this.setRecomendations(recomendations)
 
     #Seter de Id
@@ -92,7 +92,7 @@ class User:
 
     #Seter de reviews
         #Si name no es una lista de Reviews se lanza una exepción
-    def __setReviews(this, reviews):
+    def setReviews(this, reviews):
         #Comprobamos que sea una lista
         if reviews == None or type (reviews) != type([]):
             raise ReviewsNoValidException()
@@ -163,3 +163,4 @@ class User:
                 recomendations.remove(recomendation)
         recomendations = this.filterRecomendations(recomendations)        
         return recomendations
+

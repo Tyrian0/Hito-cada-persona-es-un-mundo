@@ -8,18 +8,17 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Reviews</title>
+  <title>Review | Hito</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" type="text/css">
 
   <!-- CSS -->
-  <link href="css/landing-page.css" rel="stylesheet">
+  <link href="/front_end/css/landing-page.css" rel="stylesheet">
 
 </head>
 
@@ -28,16 +27,20 @@
   <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="col-xs-3 col-md-3 col-lg-3">
-      <a href="index.html">
-        <img class="float-left" src="./img/logo.png">
+      <a href="/">
+        <img class="float-left" src="/front_end/img/logo.png">
       </a> 
     </div>
     <div class="col-xs-3 col-md-3 col-lg-3">
       
     </div>
     <div class="col-xs-6 col-md-6 col-lg-6">
-          <a class="btn btn-primary float-right ml-1" href="login.html">Iniciar sesión</a>
-          <a class="btn btn-primary float-right " href="register.html">Registrate</a>
+      {%if username  %}
+        <label>Hola {{username}} !</label>
+      {% else %}
+        <a class="btn btn-primary float-right ml-1" href="login.html">Iniciar sesión</a>
+        <a class="btn btn-primary float-right " href="register.html">Registrate</a>
+      {% endif %}
     </div>
   </nav>
 
@@ -72,6 +75,40 @@
           </form>
         </div>
         <div class="col-lg-4"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="review bg-light text-center">
+    <div class="container vh-50">
+      <div class="row">
+        <form method="post" action="/review">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+          {% if experiences %}
+            <select class="form-control" name="experience" >
+              {% for i in experiences %}
+                <option>{{i["name"]}}</option>
+              {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-4">
+          <select class="form-control" name="type" value="Selecciona un tipo">
+
+            {% for i in types %}
+              <option>{{i}}</option>
+            {% endfor %}
+          </select>
+          {% else %}
+            {{ "error" }}
+          {% endif %}
+        </div>
+        <div class="col-lg-4">
+          <input type="number" min="1" max="5" class="form-control" name="rating" placeholder="Da una valoracion"></input>
+          </div>
+          <button type="submit" class="btn btn-success left">Enviar</button>
+        </form>
       </div>
     </div>
   </section>
@@ -124,8 +161,9 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 

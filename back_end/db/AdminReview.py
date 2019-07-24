@@ -19,7 +19,7 @@ class AdminReview:
 		if user == None or type (user) != User:
 			raise UserNoValidException()
 		retrievedReview = self.getReviewFromUserAndExperience(user, review.getExperience())
-		if retrievedReview is None:
+		if type(retrievedReview) != Review or retrievedReview is None:
 			query = "INSERT INTO reviews(id_exp, id_user, rating) VALUES (%i, %i, %f)" \
 			%(review.getExperience().getId(), user.getId(), review.getRating().getValue())
 			self.__cursor.execute(query)
