@@ -83,13 +83,13 @@ def review():
     if request.method == 'POST':
         adminUser = AdminUser()
         experience_name = request.form.getlist('experience')[0]
-        rating_value = request.form.getlist('rating')[0]
+        rating_value = float(request.form.getlist('rating')[0])
         experience = adminExperience.getByName(experience_name)
         
         if experience == None:
             return 420
-        if rating_value > Rating.getMax() or rating_value < Rating.getMin():
-            return 421
+        # if rating_value > Rating.getMax() or rating_value < Rating.getMin():
+        #     return 421
 
         user = adminUser.getByUsername(username)
         user.addReview(Review(experience, Rating(rating_value)))
