@@ -102,9 +102,19 @@ def review():
         return redirect(url_for("recomendate"))
     else:
         experiences = []
+        types = []
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
-        return render_template('review.html', username=username, experiences = experiences)
+            type = experience['type']
+            if type not in types:
+                types.append(type)
+        return render_template('review.html', username=username, experiences = experiences, types = types)
+
+genders = []
+for person in people:
+    gender = person['gender']
+    if gender not in genders:
+        genders.append(gender)
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
