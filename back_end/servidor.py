@@ -82,9 +82,10 @@ def review():
     username = session["username"]
     if request.method == 'POST':
         adminUser = AdminUser()
-        experience_name = req.form["experience"]
-        rating_value = req.form["rating"]        
+        experience_name = form.getlist('experience')[0]
+        rating_value = form.getlist('rating')[0] 
         experience = adminExperience.getByName(experience_name)
+        
         if experience == None:
             return 420
         if rating_value > Rating.getMax() or rating_value < Rating.getMin():
