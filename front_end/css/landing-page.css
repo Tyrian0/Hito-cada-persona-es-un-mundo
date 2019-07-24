@@ -140,3 +140,14 @@ footer.footer {
   padding: 10% 0;
 }
 
+.hotel{
+  width: 70px;
+  height: 70px;
+  border: solid;
+  text-align: left;
+  background: url("../img/hotel.jpg") no-repeat center center;
+}
+
+.restaurant{
+  background: url("../img/restaurant.jpg") no-repeat center center;
+}
