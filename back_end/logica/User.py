@@ -49,7 +49,7 @@ class User:
     #Numero de recomendaciones que se devuelven con getRecomendations
     @staticmethod
     def getMaxRecomendations():
-        return 10
+        return 9 #10
 
     #Constructor
         #id: opcional, si no se incluye no se crea atributo
