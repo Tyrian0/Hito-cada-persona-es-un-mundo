@@ -37,7 +37,8 @@
     <div class="col-xs-6 col-md-6 col-lg-6">
       {%if username  %}
         <label>Hola {{username}} !</label>
-        <a class="btn btn-primary float-right" href="/logout">Cerrar sesión</a>
+        <a class="btn btn-primary m-1 float-right" href="/logout">Cerrar sesión</a>
+        <a class=" btn btn-primary m-1  float-right" href="/recomendate">Recomendaciónes</a>
       {% else %}
         <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
         <a class="btn btn-primary float-right " href="/register">Registrate</a>
@@ -47,7 +48,7 @@
 
 
 
-  <!-- Icons Grid -->
+  <!-- Icons Grid 
   <section class="review bg-light text-center">
     <div class="container vh-50">
       <div class="row">
@@ -79,6 +80,7 @@
       </div>
     </div>
   </section>
+  -->
 
   <!-- Reviews -->
   <section class="review bg-light text-center">
@@ -86,7 +88,7 @@
       <div class="row">
         <form method="post" action="/review">
           <div class="col-lg-3"></div>
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             {% if experiences %}
               <select class="form-control"  name="experience" >
                 {% for i in experiences %}
@@ -94,7 +96,7 @@
                 {% endfor %}
               </select>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-12">
             <select class="form-control" onchange="filtrar()" name="type" value="Selecciona un tipo">
 
               {% for i in types %}
@@ -105,8 +107,8 @@
               {{ "error" }}
             {% endif %}
           </div>
-          <div class="col-lg-4">
-            <input type="number" min="1" max="5" class="form-control" name="rating" placeholder="Da una valoracion"></input>
+          <div class="col-lg-12">
+            <input type="number" min="1" max="5" class="form-control form-group-lg" name="rating" placeholder="Da una valoracion"></input>
           </div>
           <button type="submit" class="btn btn-success left">Enviar</button>
         </form>

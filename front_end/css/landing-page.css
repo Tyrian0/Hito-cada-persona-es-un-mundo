@@ -152,8 +152,12 @@ footer.footer {
   background: url("../img/restaurant.jpg") no-repeat center center;
 }
 
-.divrecomn{
+.divrecomn {
   padding: 5px;
   margin: 5px;
   font-size: 10px !important;
+}
+
+.logo{
+  height: 38px;
 }
