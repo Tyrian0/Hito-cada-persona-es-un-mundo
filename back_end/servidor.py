@@ -145,6 +145,6 @@ def recomendate():
     #adminML.closeConnection()
     adminUser.closeConnection()
 
-    return render_template('recomendacion.html', recomendations = recomendations)
+    return render_template('recomendacion.html', recomendations = recomendations, username=username)
 
 app.run()# se encarga de ejecutar el servidor 5000
