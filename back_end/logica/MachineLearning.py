@@ -27,6 +27,7 @@ class MachineLearning:
         recomendations = {}
         for experience in self.correlations:
             recomendations[experience] = 0
+        print ("ids",len (recomendations))
         # Recorremos las reviews del usuario.
         for review in user.getReviews():
             if review.getExperience().getId() in self.correlations.columns.values.tolist():
@@ -36,10 +37,10 @@ class MachineLearning:
                         recomendations[experience] += correlation*(review.getRating().getValue()-6)
                     else:
                         recomendations[experience] += correlation*review.getRating().getValue()
-
+        print ("corr",len (recomendations))
         for experience, rating in recomendations.items():
             user.addRecomendation(Recomendation(adminexperience.getById(experience), rating))
-
+        
         adminexperience.closeConnection()
 
     def __setCorrelations(self, correlations):
