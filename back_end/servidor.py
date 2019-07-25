@@ -37,9 +37,9 @@ def login():
             if type(user) == User:
                 return login_user(username)
             else:
-                error = "Ooops! Wrong password!"
+                error = "¡Has introducido una contraseña incorrecta!"
         else:
-            error = "This username doesn't exist!"
+            error = "¡Este nombre de usuario no existe!"
     # the code below is executed if the request method
     # was GET or the credentials were invalid
     if 'username' in session.keys():
@@ -59,7 +59,7 @@ def register():
             adminUser.addUser(user)
             return login_user(username)
         else:
-            error = "This username already exists!"
+            error = "¡Este nombre de usuario ya existe!"
     # the code below is executed if the request method
     # was GET or the credentials were invalid
     if 'username' in session.keys():
@@ -82,7 +82,7 @@ def index():
 @app.route('/logout')
 def logout():
     # Elimina el username de session si está ahí
-    message = "Successfully logged out"
+    message = "Has cerrado la sesión correctamente."
     session.pop('username', None)
     return render_template('landing.html', message = message)
 
