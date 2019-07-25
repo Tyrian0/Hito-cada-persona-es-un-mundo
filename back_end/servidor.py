@@ -19,7 +19,10 @@ def login_user(username):
 
 @app.route('/', methods=['GET'])
 def landing():
-    return render_template("index.html")
+    if 'username' in session.keys():
+        username = session['username']
+        return render_template("landing.html", username=username)
+    return render_template("landing.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -40,7 +43,7 @@ def login():
     # the code below is executed if the request method
     # was GET or the credentials were invalid
     if 'username' in session.keys():
-        return redirect(url_for("review"))
+        return redirect(url_for("review")) 
     return render_template('login.html', error=error)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -59,11 +62,16 @@ def register():
             error = "This username already exists!"
     # the code below is executed if the request method
     # was GET or the credentials were invalid
+    if 'username' in session.keys():
+        return redirect(url_for("review")) 
     return render_template('register.html', error = error)
 
 @app.route('/index')
 def index():
+    if 'username' not in session.keys():
+        return redirect(url_for("login"))
     username = session["username"]
+    
     adminUser = AdminUser()
     hasReviews = adminUser.getByUsername(username).hasReviews()
     if hasReviews:
@@ -76,10 +84,12 @@ def logout():
     # Elimina el username de session si está ahí
     message = "Successfully logged out"
     session.pop('username', None)
-    return render_template('login.html', message = message)
+    return render_template('landing.html', message = message)
 
 @app.route("/review", methods=["GET", "POST"])
 def review():
+    if 'username' not in session.keys():
+        return render_template('landing.html')
     adminExperience = AdminExperience()
     username = session["username"]
     if request.method == 'POST':
@@ -117,22 +127,24 @@ def review():
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
+    if 'username' not in session.keys():
+        return render_template('landing.html')
     username = session["username"]
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
 
-    adminML = AdminMachineLearning()
-    correlations = adminML.getMachineLearning()
+    #adminML = AdminMachineLearning()
+    #correlations = adminML.getMachineLearning()
 
-    correlations.recomendate(user)
+    #correlations.recomendate(user)
 
     recomendations = []
     for recomendation in user.getRecomendations():
         recomendations.append(recomendation.toJSON())
 
-    adminML.closeConnection()
+    #adminML.closeConnection()
     adminUser.closeConnection()
 
-    return render_template('recomendacion.html', recomendations = recomendations, username = username)
+    return render_template('recomendacion.html', recomendations = recomendations)
 
 app.run()# se encarga de ejecutar el servidor 5000
