@@ -90,10 +90,10 @@ class AdminUser:
 			user = None
 		else:
 			user = User(user_db[1], user_db[2], [], [], user_db[0])
-			# user.setReviews(adminReview.getReviewsFromUser(user))
-			# if user.hasReviews():
-			# 	machineLearning = adminMachineLearning.getMachineLearning()
-			# 	machineLearning.recomendate(user)
+			user.setReviews(adminReview.getReviewsFromUser(user))
+			if user.hasReviews():
+				machineLearning = adminMachineLearning.getMachineLearning()
+				machineLearning.recomendate(user)
 		cursor.close()
 		return user
 
