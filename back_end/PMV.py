@@ -34,13 +34,18 @@ cadena = "%-"+str(tab)+"s"
 
 adminExperiences.closeConnection()
 
+userDao = AdminUser()
+nombre = input("Nombre: ")
+password = input ("Contraseña: ")
+user = userDao.getByUsername(nombre)
+
+userDao.closeConnection()
+
 print (cadena %"EXPERIENCIA", "\t%s" %"TIPO")
 for experience in experiences:
     if experience.getType() == "restaurant":
         print(cadena %experience.getName(), "\t%s" %experience.getType())
 
-
-user = User("tester", "password")
 
 experiencia = inputExperience(experiences)
 valoracion = inputRating()
