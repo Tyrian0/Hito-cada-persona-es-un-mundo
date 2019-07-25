@@ -34,31 +34,41 @@ cadena = "%-"+str(tab)+"s"
 
 adminExperiences.closeConnection()
 
-print (cadena %"EXPERIENCIA", "\t%s" %"TIPO")
-for experience in experiences:
-    if experience.getType() == "restaurant":
-        print(cadena %experience.getName(), "\t%s" %experience.getType())
+userDao = AdminUser()
+#nombre = input("Nombre: ")
+#password = input ("Contraseña: ")
+nombre = "carlos"
+user = userDao.getByUsername(nombre)
+print ("leido")
 
 
-user = User("tester", "password")
+userDao.closeConnection()
 
-experiencia = inputExperience(experiences)
-valoracion = inputRating()
-user.addReview(Review(experiencia, Rating(valoracion)))
-continuar = input ("Desea continuar? (S/N) ")
-while continuar == "S" or continuar == "s":
-    experiencia = inputExperience(experiences)
-    valoracion = inputRating()
-    continuar = input ("Desea continuar? (S/N) ")    
-    user.addReview(Review(experiencia, Rating(valoracion)))
+#print (cadena %"EXPERIENCIA", "\t%s" %"TIPO")
+#for experience in experiences:
+#    if experience.getType() == "restaurant":
+#        print(cadena %experience.getName(), "\t%s" %experience.getType())
+
+
+#experiencia = inputExperience(experiences)
+#valoracion = inputRating()
+#user.addReview(Review(experiencia, Rating(valoracion)))
+#continuar = input ("Desea continuar? (S/N) ")
+#while continuar == "S" or continuar == "s":
+#    experiencia = inputExperience(experiences)
+#    valoracion = inputRating()
+#    continuar = input ("Desea continuar? (S/N) ")    
+#    user.addReview(Review(experiencia, Rating(valoracion)))
 
 adminML = AdminMachineLearning()
 #adminML.calculateCorrelations()
 
-ml = adminML.getMachineLearning()
-ml.recomendate(user)
+#ml = adminML.getMachineLearning()
+#ml.recomendate(user)
+print ("recomendado")
 
-recomendations = user.getRecomendationsByType("restaurant")
+recomendations = user.getRecomendations()
+print ("pmv",len(recomendations))
 for recomendation in recomendations:
     print (cadena %recomendation.getExperience().getName(), "\t%g" %recomendation.getRating(), "\t%s" %recomendation.getExperience().getType())
             

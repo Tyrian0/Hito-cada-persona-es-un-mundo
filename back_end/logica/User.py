@@ -124,6 +124,7 @@ class User:
         if not this.hasRecomendations():
             raise HasNotRecomendationsException ()
         recomendations = this.__recomendations
+        print ("getRecomendations",len(recomendations))
         return this.filterRecomendations(recomendations)
 
     def filterRecomendations(this, recomendations):
@@ -131,6 +132,7 @@ class User:
             for recomendation in recomendations.copy():
                 if recomendation.getExperience() == review.getExperience():
                     recomendations.remove(recomendation)
+        print ("filterRecomendations",len(recomendations))
         recomendations.sort(reverse = True, key=lambda x : x.getRating())
         return recomendations[:User.getMaxRecomendations()]
 

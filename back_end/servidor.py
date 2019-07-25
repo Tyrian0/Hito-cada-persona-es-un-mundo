@@ -42,8 +42,6 @@ def login():
             error = "This username doesn't exist!"
     # the code below is executed if the request method
     # was GET or the credentials were invalid
-    # if 'username' in session.keys():
-    #     return redirect(url_for("review"))
     if 'username' in session.keys():
         return redirect(url_for("review")) 
     return render_template('login.html', error=error)
@@ -135,18 +133,18 @@ def recomendate():
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
 
-    adminML = AdminMachineLearning()
-    correlations = adminML.getMachineLearning()
+    #adminML = AdminMachineLearning()
+    #correlations = adminML.getMachineLearning()
 
-    correlations.recomendate(user)
+    #correlations.recomendate(user)
 
     recomendations = []
     for recomendation in user.getRecomendations():
         recomendations.append(recomendation.toJSON())
 
-    adminML.closeConnection()
+    #adminML.closeConnection()
     adminUser.closeConnection()
 
-    return render_template('recomendacion.html', recomendations = recomendations, username = username)
+    return render_template('recomendacion.html', recomendations = recomendations)
 
 app.run()# se encarga de ejecutar el servidor 5000
