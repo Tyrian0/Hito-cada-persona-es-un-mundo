@@ -24,7 +24,6 @@ def landing():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    print(session['username'])
     if request.method == 'POST':
         username = request.form.getlist('user')[0]
         password = request.form.getlist('password')[0]
@@ -40,7 +39,7 @@ def login():
             error = "This username doesn't exist!"
     # the code below is executed if the request method
     # was GET or the credentials were invalid
-    if session['username']:
+    if 'username' in session.keys():
         return redirect(url_for("review"))
     return render_template('login.html', error=error)
 
