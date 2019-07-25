@@ -6,6 +6,7 @@ from AdminExperience import *
 from AdminUser import *
 from AdminRecomendation import *
 from AdminReview import *
+from AdminMachineLearning import *
 from delete_data import *
 from datasets_import_methods import *
 
@@ -13,9 +14,9 @@ from datasets_import_methods import *
 #delete_data()
 
 # Read dataset hotels (csv)
-hotel_reviews = pd.read_csv('.\\data\\hotel_reviews.csv', sep=';', usecols=range(3), encoding ='ISO-8859-1')
-hotel_reviews = hotel_reviews.dropna()
-type_experience = 'hotel'
+# hotel_reviews = pd.read_csv('.\\data\\hotel_dataset\\hotel_reviews.csv', sep=';', usecols=range(3), encoding ='ISO-8859-1')
+# hotel_reviews = hotel_reviews.dropna()
+# type_experience = 'hotel'
 
 #addType(type_experience)
 #addExperiences(hotel_reviews, type_experience)
@@ -34,8 +35,11 @@ del restaurant_reviews['placeID']
 restaurant_reviews.columns = ['user_name', 'rating', 'experience_name']
 restaurant_reviews = restaurant_reviews.dropna()
 type_experience = 'restaurant'
+#print(restaurant_reviews)
+# addType(type_experience)
+# addExperiences(restaurant_reviews, type_experience)
+# addUsers(restaurant_reviews)
+#addReviews(restaurant_reviews, 0, 2)
 
-addType(type_experience)
-addExperiences(restaurant_reviews, type_experience)
-addUsers(restaurant_reviews)
-addReviews(restaurant_reviews, 0, 2)
+adminMachineLearning = AdminMachineLearning()
+adminMachineLearning.calculateCorrelations()
