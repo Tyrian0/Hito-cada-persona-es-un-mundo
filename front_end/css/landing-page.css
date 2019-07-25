@@ -137,7 +137,7 @@ footer.footer {
 
 .review{
   background-color: white !important;
-  padding: 10% 0;
+  padding: 5% 0;
 }
 
 .hotel{
@@ -152,10 +152,9 @@ footer.footer {
   background: url("../img/restaurant.jpg") no-repeat center center;
 }
 
-.divrecomn {
-  padding: 5px;
-  margin: 5px;
-  font-size: 10px !important;
+.divcard {
+  padding-bottom: 15px;
+  font-size: 0.9rem !important;
 }
 
 .logo{
