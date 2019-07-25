@@ -151,3 +151,9 @@ footer.footer {
 .restaurant{
   background: url("../img/restaurant.jpg") no-repeat center center;
 }
+
+.divrecomn{
+  padding: 5px;
+  margin: 5px;
+  font-size: 10px !important;
+}
