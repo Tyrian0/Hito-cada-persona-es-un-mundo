@@ -24,42 +24,40 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      <a class="navbar-brand" href="/">
-        <img src="/front_end/img/logo.png" alt="logo">
-      </a>
-    </div>
+  <nav class="navbar navbar-expand-sm bg-white">
+    <a class="navbar-brand" href="/">
+      <img src="/front_end/img/logo.png" alt="logo">
 
-    <div class="col-xs-3 col-md-3 col-lg-6">
-      
-    </div>
-    <div class="col-xs-6 col-md-6 col-lg-3 text-lg-right">
-      <div class="row">
-       {%if username  %}
-        <div class="col-lg-10">
-          <label class="hello">Hola {{username}} !</label>
-        </div>
-        <div class="col-lg-2">
+    </a>
+    <div class="collapse navbar-collapse justify-content-between" id="navbar-list-8">
+      <ul class="navbar-nav">
+       
+      </ul>
+      <div class="right-side d-flex">
+        {%if username  %}
           <ul class="navbar-nav">
+              <li>
+                <label class="hello">Hola {{username}} !</label>
+              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="/review">Valorar</a>
-                  <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+                  <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
+                  <a class="dropdown-item" href="/review">Reviws</a>
+                  <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
                 </div>
             </li>   
           </ul>
-        </div>
 
         {% else %}
           <a class="btn btn-primary float-right ml-1" href="/login">
             <i class="fas iconfas fa-sign-out-alt"></i>Iniciar sesión
           </a>
-          <a class="btn btn-primary float-right " href="/register">Regístrate</a>
+          <a class="btn btn-primary float-right " href="/register">Registrate</a>
         {% endif %}
+      </div>
     </div>
   </nav>
 
@@ -76,7 +74,7 @@
                 </div>
               {% else %}
                 {% for i in recomendations %}
-                  {% if i['experience']["type"] == 'restaurante' %}
+                  {% if i['experience']["type"] == 'restaurant' %}
                   <div class="col-md-4 divcard">
                     <div class="card">
                       <img class="card-img-top" alt="Bootstrap Thumbnail First" src="https://www.layoutit.com/img/people-q-c-600-200-1.jpg" />
@@ -110,6 +108,10 @@
         <div class="row">
           <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
             <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="/quienessomos">Quiénes somos</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
               <li class="list-inline-item">
                 <a href="#">About</a>
               </li>

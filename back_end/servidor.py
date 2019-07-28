@@ -154,4 +154,22 @@ def recomendate():
     else:
         return render_template('landing.html')
 
+@app.route("/quienessomos", methods=["GET"])
+def quienessomos():
+    if 'username' not in session.keys():
+        return render_template('landing.html')
+
+    username = session["username"]
+    adminUser = AdminUser()
+    user = adminUser.getByUsername(username)
+
+    #adminML = AdminMachineLearning()
+    #correlations = adminML.getMachineLearning()
+        
+
+    #adminML.closeConnection()
+    adminUser.closeConnection()
+
+    return render_template('quienessomos.html', username=username)
+    
 app.run()# se encarga de ejecutar el servidor 5000
