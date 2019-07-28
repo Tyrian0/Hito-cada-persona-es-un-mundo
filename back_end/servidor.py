@@ -137,10 +137,11 @@ def recomendate():
     #correlations = adminML.getMachineLearning()
 
     #correlations.recomendate(user)
-
     recomendations = []
+
     for recomendation in user.getRecomendations():
         recomendations.append(recomendation.toJSON())
+    
 
     #adminML.closeConnection()
     adminUser.closeConnection()

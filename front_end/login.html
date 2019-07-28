@@ -30,7 +30,6 @@
         
       </div>
       <div class="col-xs-6 col-md-6 col-lg-6">
-            <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
             <a class="btn btn-primary float-right " href="/register">Registrate</a>
       </div>
     </nav>
@@ -50,22 +49,16 @@
                   <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                   <label for="inputPassword">Contraseña</label>
                 </div>
-
-                <div class="custom-control custom-checkbox mb-3">
-                  <input name="remeber-pass" type="checkbox" class="custom-control-input" id="customCheck1">
-                  <!-- futuro
-                  
-                  <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
-
-                  -->
-                </div>
-                <div class="custom-control custom-checkbox mb-3">
+                <div class="custom-control custom-checkbox mb-3 text-danger">
                   {% if error %}
                   <label>{{error}}</label>
                   {% endif %}
 
                 </div>
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Iniciar sesión</button>
+                <hr class="my-4">
+                <label>¿No tienes cuenta?</label>
+                <button onclick="window.location.href='/register'" class="btn btn-lg btn-warning btn-block text-uppercase" type="submit">Registrate</button>
               </form>
             </div>
           </div>
