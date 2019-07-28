@@ -67,7 +67,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="row">
-              <!--{{ recomendations }}-->
+              <!--  { recomendations }}-->
               {% if not recomendations %}
                 <div class="col-lg-12 text-center">
                   <label>{{error}}</label>
@@ -77,7 +77,7 @@
                 <h2>Recomendaciones para ti:</h2>
               </div>
                 {% for i in recomendations %}
-                  {% if i['experience']["type"] == 'restaurant' %}
+                  {% if i['experience']["type"] == 'restaurante' %}
                   <div class="col-md-4 divcard">
                     <div class="card">
                       <img class="card-img-top" alt="Bootstrap Thumbnail First" src="https://www.layoutit.com/img/people-q-c-600-200-1.jpg" />
