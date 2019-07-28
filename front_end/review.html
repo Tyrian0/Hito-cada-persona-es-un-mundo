@@ -49,7 +49,9 @@
                   <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
                   </a>
                   <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
+                    {% if hasReviews %}
                     <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
+                    {% endif %}
                     <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
                   </div>
               </li>   

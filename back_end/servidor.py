@@ -21,7 +21,9 @@ def login_user(username):
 def landing():
     if 'username' in session.keys():
         username = session['username']
-        return render_template("landing.html", username=username)
+        adminUser = AdminUser()
+        hasReviews = adminUser.getByUsername(username).hasReviews()  
+        return render_template("landing.html", hasReviews = hasReviews, username=username)
     return render_template("landing.html")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,8 +94,8 @@ def review():
         return render_template('landing.html')
     adminExperience = AdminExperience()
     username = session["username"]
-    if request.method == 'POST':
-        adminUser = AdminUser()
+    adminUser = AdminUser()
+    if request.method == 'POST':        
         experience_name = request.form.getlist('experience')[0]
         rating_value = float(request.form.getlist('rating')[0])
         experience = adminExperience.getByName(experience_name)
@@ -117,18 +119,19 @@ def review():
     else:
         experiences = []
         types = []
+        hasReviews = adminUser.getByUsername(username).hasReviews()
         for experience in adminExperience.getAll():
             experiences.append(experience.toJSON())
-
             type = experience.getType()
             if type not in types:
                 types.append(type)
-        return render_template('review.html', username=username, experiences = experiences, types = types)
+        return render_template('review.html', hasReviews=hasReviews, username=username, experiences = experiences, types = types)
 
 @app.route("/recomendate", methods=["GET"])
 def recomendate():
     if 'username' not in session.keys():
         return render_template('landing.html')
+
     username = session["username"]
     adminUser = AdminUser()
     user = adminUser.getByUsername(username)
@@ -139,13 +142,16 @@ def recomendate():
     #correlations.recomendate(user)
     recomendations = []
 
-    for recomendation in user.getRecomendations():
-        recomendations.append(recomendation.toJSON())
-    
+    if user.hasReviews():
+        for recomendation in user.getRecomendations():
+            recomendations.append(recomendation.toJSON())
+        
 
-    #adminML.closeConnection()
-    adminUser.closeConnection()
+        #adminML.closeConnection()
+        adminUser.closeConnection()
 
-    return render_template('recomendacion.html', recomendations = recomendations, username=username)
+        return render_template('recomendacion.html', recomendations = recomendations, username=username)
+    else:
+        return render_template('landing.html')
 
 app.run()# se encarga de ejecutar el servidor 5000

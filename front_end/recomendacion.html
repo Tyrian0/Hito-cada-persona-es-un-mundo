@@ -47,7 +47,7 @@
                 <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="/review">Reviews</a>
+                  <a class="dropdown-item" href="/review">Valorar</a>
                   <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
                 </div>
             </li>   
@@ -76,7 +76,7 @@
                 </div>
               {% else %}
                 {% for i in recomendations %}
-                  {% if i['experience']["type"] == 'restaurant' %}
+                  {% if i['experience']["type"] == 'restaurante' %}
                   <div class="col-md-4 divcard">
                     <div class="card">
                       <img class="card-img-top" alt="Bootstrap Thumbnail First" src="https://www.layoutit.com/img/people-q-c-600-200-1.jpg" />
