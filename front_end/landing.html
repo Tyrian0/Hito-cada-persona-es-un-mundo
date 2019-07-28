@@ -41,7 +41,7 @@
         {%if username  %}
           <ul class="navbar-nav">
               <li>
-                <label class="hello">Hola {{username}} !</label>
+                <label class="hello">Hola <b>{{username}}</b>!</label>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -61,7 +61,7 @@
           <a class="btn btn-primary float-right ml-1" href="/login">
             <i class="fas iconfas fa-sign-out-alt"></i>Iniciar sesión
           </a>
-          <a class="btn btn-primary float-right " href="/register">Registrate</a>
+          <a class="btn btn-primary float-right " href="/register">Regístrate</a>
         {% endif %}
       </div>
     </div>

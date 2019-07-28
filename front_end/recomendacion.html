@@ -38,7 +38,7 @@
       <div class="row">
        {%if username  %}
         <div class="col-lg-10">
-          <label class="hello">Hola {{username}} !</label>
+          <label class="hello">Hola <b>{{username}}</b>!</label>
         </div>
         <div class="col-lg-2">
           <ul class="navbar-nav">
@@ -72,9 +72,12 @@
               <!--{{ recomendations }}-->
               {% if not recomendations %}
                 <div class="col-lg-12 text-center">
-                  <labe>{{error}}</labe>
+                  <label>{{error}}</label>
                 </div>
               {% else %}
+              <div class="col-lg-12 text-center formreview">
+                <h2>Recomendaciones para ti:</h2>
+              </div>
                 {% for i in recomendations %}
                   {% if i['experience']["type"] == 'restaurante' %}
                   <div class="col-md-4 divcard">

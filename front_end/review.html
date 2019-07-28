@@ -42,7 +42,7 @@
           {%if username  %}
             <ul class="navbar-nav">
                 <li>
-                  <label class="hello">Hola {{username}} !</label>
+                  <label class="hello">Hola <b>{{username}}</b>!</label>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -74,7 +74,7 @@
           <div class="col-lg-6 mx-auto my-auto">
             <form method="post" action="/review">
               <div class="col-lg-12 text-center formreview">
-                <h2>Reseña</h2>
+                <h2>Añade una reseña</h2>
               </div>
               <div class="col-lg-12 formreview">
                 <h5 class="text-left">Experiencia:</h5>
@@ -113,7 +113,7 @@
                 </p>
               </div>
               <div class="col-lg-12 text-center">
-                <button type="submit" class="btn btn-success left">Enviar</button>
+                <button type="submit" class="btn btn-success left">Valorar</button>
               </div>
             </form>
 
