@@ -145,7 +145,7 @@ CREATE TABLE `types_experiences` (
 
 LOCK TABLES `types_experiences` WRITE;
 /*!40000 ALTER TABLE `types_experiences` DISABLE KEYS */;
-INSERT INTO `types_experiences` VALUES (36,'restaurant');
+INSERT INTO `types_experiences` VALUES (36,'restaurante');
 /*!40000 ALTER TABLE `types_experiences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-25 10:00:14
+-- Dump completed on 2019-07-28 15:55:04
