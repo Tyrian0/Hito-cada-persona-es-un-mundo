@@ -1,5 +1,7 @@
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100%;
+  width: 100%;
 }
 
 h1,
@@ -12,9 +14,34 @@ h6 {
   font-weight: 700;
 }
 
+section{
+  height: 100%;
+  width: 100%;
+}
+
 .navbar{
   min-height: 8vh;
+  background-color:whitesmoke!important;
 }
+
+.navbar-nav img{
+  height: 38px;
+  width: 38px;
+}
+.hello{
+  padding-top: 1rem;
+}
+
+.nav-page{
+  color: black !important;
+  
+}
+
+.nav-page:hover{
+  color: green !important;
+  
+}
+
 
 header.masthead {
   position: relative;
@@ -23,7 +50,7 @@ header.masthead {
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
-  height: 95vh;
+  height: 92vh;
 }
 
 header p {
@@ -52,8 +79,8 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 10rem;
-    padding-bottom: 10rem;
+    padding-top: 17rem;
+    padding-bottom: 23rem;
   }
   header.masthead h1 {
     font-size: 3rem;
@@ -130,9 +157,21 @@ header.masthead h1 {
   opacity: 0.3;
 }
 
-footer.footer {
+footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
+  left:0px;
+  width:100%;
+  background-color: whitesmoke !important
+}
+
+.footer-fixed{
+  position: absolute;
+  bottom: 0px;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  left:0px;
+  width:100%;
 }
 
 .review{
@@ -143,7 +182,6 @@ footer.footer {
 .hotel{
   width: 70px;
   height: 70px;
-  border: solid;
   text-align: left;
   background: url("../img/hotel.jpg") no-repeat center center;
 }
@@ -159,4 +197,59 @@ footer.footer {
 
 .logo{
   height: 38px;
+}
+
+
+.card-title {
+  padding: 10px 0px;
+}
+
+
+/*calificaciones estrellas*/
+
+p.clasificacion {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  padding-left: 15px;
+}
+
+p.clasificacion input {
+  position: absolute;
+  top: -100px;
+}
+
+p.clasificacion label {
+  float: right;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+p.clasificacion label:hover,
+p.clasificacion label:hover ~ label,
+p.clasificacion input:checked ~ label {
+  color: #dd4;
+}
+
+body label {  
+    color: #6c757d;;
+    display: block;
+}
+
+.formreview{
+  margin-bottom: 1rem;
+}
+
+.menu-user{
+  left: -7rem !important;
+  top: 3rem;
+  position: absolute !important;
+}
+
+.iconfas{
+  margin-right: 0.2rem !important;
+}
+
+.btn{
+  margin: 0rem 0.2rem ;
 }

@@ -25,23 +25,43 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      <a href="/">
-        <img class="float-left" src="/front_end/img/logo.png">
-      </a> 
-    </div>
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      
-    </div>
-    <div class="col-xs-6 col-md-6 col-lg-6">
-      {%if username  %}
-        <label>Hola {{username}} !</label>
-        <a class="btn btn-primary float-right" href="/logout">Cerrar sesión</a>
-      {% else %}
-        <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
-        <a class="btn btn-primary float-right " href="/register">Registrate</a>
-      {% endif %}
+  <nav class="navbar navbar-expand-sm bg-white">
+    <a class="navbar-brand" href="/">
+      <img src="/front_end/img/logo.png" alt="logo">
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-8" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbar-list-8">
+      <ul class="navbar-nav">
+       
+      </ul>
+      <div class="right-side d-flex">
+        {%if username  %}
+          <ul class="navbar-nav">
+              <li>
+                <label class="hello">Hola {{username}} !</label>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
+                  <a class="dropdown-item" href="/review">Reviews</a>
+                  <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
+                </div>
+            </li>   
+          </ul>
+
+        {% else %}
+          <a class="btn btn-primary float-right ml-1" href="/login">
+            <i class="fas iconfas fa-sign-out-alt"></i>Iniciar sesión
+          </a>
+          <a class="btn btn-primary float-right " href="/register">Registrate</a>
+        {% endif %}
+      </div>
     </div>
   </nav>
 
@@ -70,12 +90,17 @@
       </div>
     </div>
   </header>
+
   <!-- Footer -->
-  <footer class="footer bg-light">
+  <footer>
     <div class="container">
       <div class="row">
         <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
           <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="/quienesSomos.html">Quiénes somos</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
             <li class="list-inline-item">
               <a href="#">About</a>
             </li>

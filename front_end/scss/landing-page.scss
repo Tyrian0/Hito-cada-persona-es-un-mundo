@@ -10,3 +10,16 @@
 @import "testimonials.scss";
 @import "call-to-action.scss";
 @import "footer.scss";
+
+
+$muted: #6c757d;
+
+body {
+  margin: 2rem 0rem;
+  
+  label {
+    color: $muted;
+    display: block;
+    margin-top: 2rem;
+  }
+}
