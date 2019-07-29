@@ -45,7 +45,7 @@
                 </a>
                 <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
-                  <a class="dropdown-item" href="/review">Reviws</a>
+                  <a class="dropdown-item" href="/review">Reviews</a>
                   <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
                 </div>
             </li>   
@@ -67,7 +67,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="row">
-              <!--{{ recomendations }}-->
+              <!-- {{ recomendations }}-->
               {% if not recomendations %}
                 <div class="col-lg-12 text-center">
                   <label>{{error}}</label>
@@ -77,15 +77,35 @@
                 <h2>Recomendaciones para ti:</h2>
               </div>
                 {% for i in recomendations %}
-                  {% if i['experience']["type"] == 'restaurant' %}
+                  {% if i['experience']["type"] == 'restaurante' %}
                   <div class="col-md-4 divcard">
                     <div class="card">
-                      <img class="card-img-top" alt="Bootstrap Thumbnail First" src="https://www.layoutit.com/img/people-q-c-600-200-1.jpg" />
+                      {% if i ['experience']["name"] == "Dominos Pizza" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/dominospizza.png" />
+                      {% elif i ['experience']["name"] == "El Club" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elclub.jpg" />
+                      {% elif i ['experience']["name"] == "Restaurante Guerra" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elguerra.jpg" />
+                      {% elif i ['experience']["name"] == "pizza clasica" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/pizzaclasica.png" />
+                      {% elif i ['experience']["name"] == "don burguers" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/donburguers.jpg" />
+                      {% elif i ['experience']["name"] == "Cabana Huasteca" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/cabañahuasteca.jpg" />
+                      {% elif i ['experience']["name"] == "Cenaduria El RincÃ³n de Tlaquepaque" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/Cenaduriatlaquepaque.jpg" />
+                      {% elif i ['experience']["name"] == "Gorditas Doa Gloria" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/gorditasdoagloria.jpg" />
+                      {% elif i ['experience']["name"] == "El angel Restaurante" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elangel.jpg" />
+                      {% else %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/pordefecto.jpg" />
+                      {% endif %}
                       <div class="card-block">
                         <h6 class="card-title">
                           {{ i['experience']["name"] }}
                         </h6>
-                        <label>valoración: {{i['rating']}}</label>
+                        <label><!--valoración: {{i['rating']}}--></label>
                         <p class="card-text">
                           {{ i['experience']["type"] }}
                         </p>
