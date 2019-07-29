@@ -33,11 +33,11 @@ class RecomendationsNoValidException(UserException):
     def __init__(this):
         UserException.__init__(this, "recomendations debe ser una lista de objetos Recomendation.")
 
-class RecomendationNoValidException(UserException):
+class RecomendationsNoValidException(UserException):
     def __init__(this):
         UserException.__init__(this, "recomendation debe ser una instancia de Recomendation.")
 
-class HasNotRecomendationException(UserException):
+class HasNotRecomendationsException(UserException):
     def __init__(this):
         UserException.__init__(this, "El usuario no tiene recomendaciones.")
 
@@ -122,7 +122,7 @@ class User:
     #Devuelve las recomendaciones ordenadas por rating.
     def getRecomendations(this):
         if not this.hasRecomendations():
-            raise HasNotRecomendationsException ()
+            raise HasNotRecomendationsException()
         recomendations = this.__recomendations
         print ("getRecomendations",len(recomendations))
         return this.filterRecomendations(recomendations)

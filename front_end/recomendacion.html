@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Reviews</title>
+  <title>Recomendaciones | Hito</title>
  <!-- Bootstrap core CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,113 +23,158 @@
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      <a href="/">
-        <img class="float-left" src="/front_end/img/logo.png">
-      </a> 
-    </div>
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      
-    </div>
-    <div class="col-xs-6 col-md-6 col-lg-6">
-      {%if username  %}
-        <label>Hola {{username}} !</label>
-        <a class="btn btn-primary float-right" href="/logout">Cerrar sesión</a>
-      {% else %}
-        <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
-        <a class="btn btn-primary float-right " href="/register">Registrate</a>
-      {% endif %}
+   <!-- Navigation -->
+  <nav class="navbar navbar-expand-sm bg-white">
+    <a class="navbar-brand" href="/">
+      <img src="/front_end/img/logo.png" alt="logo">
+
+    </a>
+    <div class="collapse navbar-collapse justify-content-between" id="navbar-list-8">
+      <ul class="navbar-nav">
+       
+      </ul>
+      <div class="right-side d-flex">
+        {%if username  %}
+          <ul class="navbar-nav">
+              <li>
+                <label class="hello">Hola <b>{{username}}</b>!</label>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
+                  <a class="dropdown-item" href="/review">Reviews</a>
+                  <a class="dropdown-item" href="/logout">Cerrar Sessión</a>
+                </div>
+            </li>   
+          </ul>
+
+        {% else %}
+          <a class="btn btn-primary float-right ml-1" href="/login">
+            <i class="fas iconfas fa-sign-out-alt"></i>Iniciar sesión
+          </a>
+          <a class="btn btn-primary float-right " href="/register">Regístrate</a>
+        {% endif %}
+      </div>
     </div>
   </nav>
 
   <!-- Icons Grid -->
-  <section class="review bg-light text-center">
-    <div class="container">
-      <div class="row">
-        <label class="col-lg-12 control-label">Resultado</label>
-        <!--{{ recomendations}}-->
-        {% for i in recomendations %}
-          {% if i['experience']["type"] == 'restaurant' %}
-            <div class="col-lg-3 border border-dark rounded divrecomn text-left">
-              <div class="col-lg-12">
-                <div class="row">
-                  <div class="col-lg-9">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <span>{{ i['experience']["name"] }}</span><br>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <span>{{ i['experience']["type"] }}</span><br>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <span>ubicación futuro</span>
+  <section class="review bg-light">
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+              <!--  { recomendations }}-->
+              {% if not recomendations %}
+                <div class="col-lg-12 text-center">
+                  <label>{{error}}</label>
+                </div>
+              {% else %}
+              <div class="col-lg-12 text-center formreview">
+                <h2>Recomendaciones para ti:</h2>
+              </div>
+                {% for i in recomendations %}
+                  {% if i['experience']["type"] == 'restaurante' %}
+                  <div class="col-md-4 divcard">
+                    <div class="card">
+                      {% if i ['experience']["name"] == "Dominos Pizza" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/dominospizza.png" />
+                      {% elif i ['experience']["name"] == "El Club" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elclub.jpg" />
+                      {% elif i ['experience']["name"] == "Restaurante Guerra" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elguerra.jpg" />
+                      {% elif i ['experience']["name"] == "pizza clasica" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/pizzaclasica.png" />
+                      {% elif i ['experience']["name"] == "don burguers" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/donburguers.jpg" />
+                      {% elif i ['experience']["name"] == "Cabana Huasteca" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/cabañahuasteca.jpg" />
+                      {% elif i ['experience']["name"] == "Cenaduria El RincÃ³n de Tlaquepaque" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/Cenaduriatlaquepaque.jpg" />
+                      {% elif i ['experience']["name"] == "Gorditas Doa Gloria" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/gorditasdoagloria.jpg" />
+                      {% elif i ['experience']["name"] == "El angel Restaurante" %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/elangel.jpg" />
+                      {% else %}
+                        <img class="card-img-top car-img" alt="Bootstrap Thumbnail First" src="/front_end/img/imgredimensionadas/pordefecto.jpg" />
+                      {% endif %}
+                      <div class="card-block">
+                        <h6 class="card-title">
+                          {{ i['experience']["name"] }}
+                        </h6>
+                        <label><!--valoración: {{i['rating']}}--></label>
+                        <p class="card-text">
+                          {{ i['experience']["type"] }}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div class=" col-lg-3 restaurant"></div>
-                </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
               </div>
             </div>
-          {% elif i['experience']["type"] == 'restaurant' %}}
-            <div class="col-lg-4 restaurant">{{ i['experience']["name"] }}</div>
-          {% endif%}
-        {% endfor %}
-      </div>
-    </div>
+          </div>
+        </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item">
-              <a href="#">About</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-facebook fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fab fa-instagram fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
+  {% if not recomendations%}
+      <footer class="footer-fixed">
+  {% else %}
+      <footer class="footer">
+  {%endif%}
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="/quienessomos">Quiénes somos</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+          </div>
+          <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-facebook fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fab fa-instagram fa-2x fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

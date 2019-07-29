@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,9 +32,10 @@
       </div>
       <div class="col-xs-6 col-md-6 col-lg-6">
             <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
-            <a class="btn btn-primary float-right " href="/register">Registrate</a>
       </div>
     </nav>
+
+
     <div class="container">
       <div class="row login ">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-auto">
@@ -50,20 +52,18 @@
                   <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                   <label for="inputPassword">Contraseña</label>
                 </div>
-
-                <div class="custom-control custom-checkbox mb-3">
-                  <input name="remeber-pass" type="checkbox" class="custom-control-input" id="customCheck1">
-                  <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
-                </div>
-                <div class="custom-control custom-checkbox mb-3">
+                <div class="custom-control custom-checkbox text-danger mb-3">
                   {%if error%}
                   <label>{{error}}</label>
                   {% endif %}
                 </div>
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrate</button>
+              </form>
 
+              <form class="form-signin" action="/login">
                 <hr class="my-4">
-                <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Registrarte con Google</button>
+                <label>¿Ya tienes cuenta?</label>
+                <button onclick="window.location.href='/login'" class="btn btn-lg btn-warning btn-block text-uppercase"  >Iniciar Session</button>
               </form>
             </div>
           </div>

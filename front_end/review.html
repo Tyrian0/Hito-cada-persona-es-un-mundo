@@ -1,187 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
-<head>
+  <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>Review | Hito</title>
+    <title>Review | Hito</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" type="text/css">
+    <!-- Custom fonts for this template -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css">
 
-  <!-- CSS -->
-  <link href="/front_end/css/landing-page.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="/front_end/css/landing-page.css" rel="stylesheet">
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light static-top">
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      <a href="/">
-        <img class="float-left" src="/front_end/img/logo.png">
-      </a> 
-    </div>
-    <div class="col-xs-3 col-md-3 col-lg-3">
-      
-    </div>
-    <div class="col-xs-6 col-md-6 col-lg-6">
-      {%if username  %}
-        <label>Hola {{username}} !</label>
-        <a class="btn btn-primary float-right" href="/logout">Cerrar sesión</a>
-      {% else %}
-        <a class="btn btn-primary float-right ml-1" href="/login">Iniciar sesión</a>
-        <a class="btn btn-primary float-right " href="/register">Registrate</a>
-      {% endif %}
-    </div>
-  </nav>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-sm bg-white">
+      <a class="navbar-brand" href="/">
+        <img src="/front_end/img/logo.png" alt="logo">
 
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-8" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-between" id="navbar-list-8">
+        <ul class="navbar-nav">
+         
+        </ul>
+        <div class="right-side d-flex">
+          {%if username  %}
+            <ul class="navbar-nav">
+                <li>
+                  <label class="hello">Hola <b>{{username}}</b>!</label>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="/front_end/img/usuario.png" width="40" height="40" class="rounded-circle">
+                  </a>
+                  <div class="dropdown-menu menu-user" aria-labelledby="navbarDropdownMenuLink">
+                    {% if hasReviews %}
+                    <a class="dropdown-item" href="/recomendate">Recomendaciones</a>
+                    {% endif %}
+                    <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+                  </div>
+              </li>   
+            </ul>
 
+          {% else %}
+            <a class="btn btn-primary float-right ml-1" href="/login">
+              <i class="fas iconfas fa-sign-out-alt"></i>Iniciar sesión
+            </a>
+            <a class="btn btn-primary float-right " href="/register">Regístrate</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
 
-  <!-- Icons Grid -->
-  <section class="review bg-light text-center">
-    <div class="container vh-50">
-      <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-          <form class="form-horizontal" action="recomendacion.html/review" method="post">
-            <div class="form-group">
-              <label class="col-lg-12 control-label">Experiencia</label>
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" name="experience" required="" />
-                </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-lg-12 control-label">Valoración</label>
-              <div class="col-lg-12">
-                <input type="number" min="1" max="5" placeholder="Entre 1 y 5" step="0.1" class="form-control" name="rating" required="" />
+    <!-- Reviews -->
+    <section class="review bg-light ">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mx-auto my-auto">
+            <form method="post" action="/review">
+              <div class="col-lg-12 text-center formreview">
+                <h2>Añade una reseña</h2>
               </div>
-            </div>
-
-            <div class="form-group">
-              <div class="">
-                <button type="submit" class="btn btn-success left">Enviar</button>
+              <div class="col-lg-12 formreview">
+                <h5 class="text-left">Experiencia:</h5>
+                {% if experiences %}
+                  <select class="selectpicker col-lg-12" data-live-search="true" searchable="Search here.." name="experience" >
+                    {% for i in experiences %}
+                      <option>{{i["name"]}}</option>
+                    {% endfor %}
+                  </select>
               </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-lg-4"></div>
-      </div>
-    </div>
-  </section>
+              <div class="col-lg-12 formreview">
+                <h5 class="text-left">Tipo:</h5>
+                <select class="selectpicker col-lg-12" data-live-search="true" onchange="filtrar()" name="type" value="Selecciona un tipo">
 
-  <!-- Reviews -->
-  <section class="review bg-light text-center">
-    <div class="container vh-50">
-      <div class="row">
-        <form method="post" action="/review">
-          <div class="col-lg-3"></div>
-          <div class="col-lg-6">
-            {% if experiences %}
-              <select class="form-control"  name="experience" >
-                {% for i in experiences %}
-                  <option>{{i["name"]}}</option>
-                {% endfor %}
-              </select>
-          </div>
-          <div class="col-lg-4">
-            <select class="form-control" onchange="filtrar()" name="type" value="Selecciona un tipo">
+                  {% for i in types %}
+                    <option>{{i}}</option>
+                  {% endfor %}
+                </select>
+                {% else %}
 
-              {% for i in types %}
-                <option>{{i}}</option>
-              {% endfor %}
-            </select>
-            {% else %}
-              {{ "error" }}
-            {% endif %}
-          </div>
-          <div class="col-lg-4">
-            <input type="number" min="1" max="5" class="form-control" name="rating" placeholder="Da una valoracion"></input>
-          </div>
-          <button type="submit" class="btn btn-success left">Enviar</button>
-        </form>
-      </div>
-    </div>
-  </section>
+                {% endif %}
+              </div>
+              <div class="col-lg-12 formreview">
+                <h5 class="text-left">Valoración:</h5>
+                <p class="clasificacion">
+                  <input id="radio1" type="radio" name="rating" value="5">
+                  <label for="radio1">★</label>
+                  <input id="radio2" type="radio" name="rating" value="4">
+                  <label for="radio2">★</label>
+                  <input id="radio3" type="radio" name="rating" value="3">
+                  <label for="radio3">★</label>
+                  <input id="radio4" type="radio" name="rating" value="2">
+                  <label for="radio4">★</label>
+                  <input checked="" id="radio5" type="radio" name="rating" value="1">
+                  <label for="radio5">★</label>
+                </p>
+              </div>
+              <div class="col-lg-12 text-center">
+                <button type="submit" class="btn btn-success left">Valorar</button>
+              </div>
+            </form>
 
-  <!-- Footer -->
-  <footer class="footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item">
-              <a href="#">About</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Contact</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Terms of Use</a>
-            </li>
-            <li class="list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-          </ul>
-          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
-        </div>
-        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-facebook fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item mr-3">
-              <a href="#">
-                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a href="#">
-                <i class="fab fa-instagram fa-2x fa-fw"></i>
-              </a>
-            </li>
-          </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <script type="text/javascript">
-    
-    function filtrar() {
-      
-        document.write("{{experiences}}")
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+            <ul class="list-inline mb-2">
+              <li class="list-inline-item">
+                <a href="/quienessomos">Quiénes somos</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">About</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Contact</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+            <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+          </div>
+          <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-facebook fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item mr-3">
+                <a href="#">
+                  <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fab fa-instagram fa-2x fa-fw"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-    }
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 
-
-
-
-
-
-
-  </script>
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
+  </body>
 
 </html>
